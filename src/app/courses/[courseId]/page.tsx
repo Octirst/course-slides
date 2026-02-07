@@ -95,13 +95,14 @@ export default async function CoursePage({ params }: PageProps) {
                                                 {unit.title}
                                             </span>
                                             {unit.available ? (
-                                                <Link
-                                                    href={`/slides/${course.id}/${unit.id}/`}
+                                                <a
+                                                    href={`/slides/${course.id}/${unit.id}/index.html`}
                                                     target="_blank"
+                                                    rel="noopener noreferrer"
                                                     className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition"
                                                 >
                                                     查看 Slides
-                                                </Link>
+                                                </a>
                                             ) : (
                                                 <span className="px-4 py-2 bg-gray-100 text-gray-400 text-sm rounded-lg">
                                                     待更新

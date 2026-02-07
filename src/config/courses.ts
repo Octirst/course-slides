@@ -25,7 +25,7 @@ export const courses: Course[] = [
             {
                 id: "unit01-lesson02",
                 title: "第2次课：Linux进阶与网络配置",
-                available: false,
+                available: true,
             },
         ],
     },
