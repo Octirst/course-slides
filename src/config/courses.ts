@@ -27,6 +27,11 @@ export const courses: Course[] = [
                 title: "第2次课：Linux进阶与网络配置",
                 available: true,
             },
+            {
+                id: "unit02-lesson03",
+                title: "第3次课：HDFS初探与伪分布式部署",
+                available: true,
+            },
         ],
     },
     {
