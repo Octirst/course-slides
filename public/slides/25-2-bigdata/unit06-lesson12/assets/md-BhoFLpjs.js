@@ -1,0 +1,8 @@
+import{_ as r}from"./slidev/CodeBlockWrapper.vue_vue_type_script_setup_true_lang--HcBSyjQ.js";import{o as p,b as c,w as a,g as s,d as u,m as d,ad as n,v as m,x as f,T as t}from"./modules/vue-BzE62PQD.js";import{I as _}from"./slidev/default-DzkiLBGC.js";import{u as k,f as g}from"./slidev/context-Dq8ZxqJq.js";import"./modules/unplugin-icons-K7uUXEbk.js";import"./index-B20CQCUl.js";import"./modules/shiki-C0LGPrui.js";const N={__name:"slides.md__slidev_3",setup(h){const{$clicksContext:l,$frontmatter:i}=k();return l.setup(),(x,e)=>{const o=r;return p(),c(_,m(f(t(g)(t(i),2))),{default:a(()=>[e[1]||(e[1]=s("h1",null,"📋 课程进度",-1)),u(o,d({},{title:"",ranges:[]}),{default:a(()=>[...e[0]||(e[0]=[s("pre",{class:"shiki shiki-themes vitesse-dark vitesse-light slidev-code",style:{"--shiki-dark":"#dbd7caee","--shiki-light":"#393a34","--shiki-dark-bg":"#121212","--shiki-light-bg":"#ffffff"}},[s("code",{class:"language-text"},[s("span",{class:"line"},[s("span",null,"大数据平台全景")]),n(`
+`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 1: 环境准备 (Linux + 网络)")]),n(`
+`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 2: 数据存储 (HDFS)")]),n(`
+`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 3: 数据分析 (Hive)")]),n(`
+`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 4: 数据采集 (Flume)")]),n(`
+`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 5: 快速查询 (HBase)")]),n(`
+`),s("span",{class:"line"},[s("span",null,"├── 📍 Unit 6: 集群运维 (ZK + HA) ← 我们在这里！")]),n(`
+`),s("span",{class:"line"},[s("span",null,"└── 📋 Unit 7: 综合项目")])])],-1)])]),_:1},16)]),_:1},16)}}};export{N as default};

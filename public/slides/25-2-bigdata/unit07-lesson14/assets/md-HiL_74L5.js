@@ -1,0 +1,9 @@
+import{_ as r}from"./slidev/CodeBlockWrapper.vue_vue_type_script_setup_true_lang-BZD1vHQ-.js";import{o as p,b as u,w as l,g as s,d as c,m as d,ad as e,v as f,x as m,T as a}from"./modules/vue-DsKEqm3i.js";import{I as k}from"./slidev/center-DJ6yGSmy.js";import{u as g,f as _}from"./slidev/context-DQlSeC4b.js";import"./modules/unplugin-icons-BGSKkvx_.js";import"./index-CpfU-Oex.js";import"./modules/shiki-CfdZXfaF.js";const V={__name:"slides.md__slidev_4",setup(h){const{$clicksContext:t,$frontmatter:i}=g();return t.setup(),(v,n)=>{const o=r;return p(),u(k,f(m(a(_)(a(i),3))),{default:l(()=>[n[1]||(n[1]=s("h1",null,"🔗 完整数据流向（本项目要实现的）",-1)),c(o,d({},{title:"",ranges:[]}),{default:l(()=>[...n[0]||(n[0]=[s("pre",{class:"shiki shiki-themes vitesse-dark vitesse-light slidev-code",style:{"--shiki-dark":"#dbd7caee","--shiki-light":"#393a34","--shiki-dark-bg":"#121212","--shiki-light-bg":"#ffffff"}},[s("code",{class:"language-text"},[s("span",{class:"line"},[s("span",null,"门店 POS 日志文件")]),e(`
+`),s("span",{class:"line"},[s("span",null,"    ↓  Flume 自动采集")]),e(`
+`),s("span",{class:"line"},[s("span",null,"HDFS（/freshlife/pos/日期/）")]),e(`
+`),s("span",{class:"line"},[s("span",null,"    ↓  Hive LOAD DATA / 外部表")]),e(`
+`),s("span",{class:"line"},[s("span",null,"Hive 数仓（freshlife 库）")]),e(`
+`),s("span",{class:"line"},[s("span",null,"    ↓  SQL 分析")]),e(`
+`),s("span",{class:"line"},[s("span",null,"分析结果（GMV/TOP10/复购率...）")]),e(`
+`),s("span",{class:"line"},[s("span",null,"    ↓  导出")]),e(`
+`),s("span",{class:"line"},[s("span",null,"可视化大屏 + 经营分析报告")])])],-1)])]),_:1},16),n[2]||(n[2]=s("blockquote",null,[s("p",null,[e("💡 "),s("strong",null,"今天的目标：把上面这条链路跑通！")])],-1))]),_:1},16)}}};export{V as default};
