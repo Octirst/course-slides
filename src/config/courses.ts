@@ -49,11 +49,13 @@ export const courses: Course[] = [
     },
     {
         id: "25-2-javaweb",
-        name: "Java Web 开发实战",
+        name: "Java Web 开发技术",
         semester: "2025-2",
-        description: "Spring Boot 与前后端开发",
+        description: "Spring MVC 与 Web 核心技术",
         icon: "☕",
-        units: [],
+        units: [
+            { id: "unit01-lesson01", title: "第1次课：Java Web概述与环境搭建", available: true },
+        ],
     },
 ];
 

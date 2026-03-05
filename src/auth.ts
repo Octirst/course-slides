@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-const STUDENT_PASSWORD = process.env.STUDENT_PASSWORD || "bigdata2025";
+const STUDENT_PASSWORD = process.env.STUDENT_PASSWORD || "zbti-ai-cs2025";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [

@@ -96,7 +96,7 @@ export default async function CoursePage({ params }: PageProps) {
                                             </span>
                                             {unit.available ? (
                                                 <a
-                                                    href={`/slides/${course.id}/${unit.id}/index.html`}
+                                                    href={`/slides/${course.id}/${unit.id}/1`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition"
