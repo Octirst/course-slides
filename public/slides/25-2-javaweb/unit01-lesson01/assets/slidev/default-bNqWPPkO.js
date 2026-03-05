@@ -1,1 +1,0 @@
-import{o as t,e as o,i as s}from"../modules/vue-D3Ftgrvy.js";import{b as l}from"../index-CCK_XtKl.js";const a={},r={class:"slidev-layout default"};function c(e,d){return t(),o("div",r,[s(e.$slots,"default")])}const _=l(a,[["render",c],["__file","/private/tmp/slidev-build-60631/node_modules/@slidev/client/layouts/default.vue"]]);export{_ as I};
