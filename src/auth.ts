@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-const STUDENT_PASSWORD = process.env.STUDENT_PASSWORD || "zbti-ai-cs2025";
+const STUDENT_PASSWORD = process.env.STUDENT_PASSWORD || "zbti-ai-cs2026";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -22,8 +22,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     return null;
                 }
 
-                // Validate student ID format (e.g., 10 digits)
-                if (!/^\d{6,12}$/.test(studentId)) {
+                // Validate student ID format (exactly 10 digits)
+                if (!/^\d{10}$/.test(studentId)) {
                     return null;
                 }
 
