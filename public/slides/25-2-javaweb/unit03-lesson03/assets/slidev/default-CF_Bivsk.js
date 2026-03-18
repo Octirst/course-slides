@@ -1,0 +1,1 @@
+import{o as t,e as o,i as s}from"../modules/vue-CffDVSch.js";import{b as a}from"../index-Bc2UbTdd.js";const n={},c={class:"slidev-layout default"};function l(e,r){return t(),o("div",c,[s(e.$slots,"default")])}const _=a(n,[["render",l],["__file","/Users/kai/Documents/工商/教学/25-2Javaweb/教学规划/PPT/Unit03_第3次课/node_modules/@slidev/client/layouts/default.vue"]]);export{_ as I};

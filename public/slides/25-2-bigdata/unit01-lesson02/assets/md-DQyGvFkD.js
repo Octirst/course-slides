@@ -1,0 +1,12 @@
+import{_ as u}from"./slidev/VClick-Cz10C7Rg.js";import{_ as c}from"./slidev/CodeBlockWrapper.vue_vue_type_script_setup_true_lang-BmHE9RYt.js";import{o as m,b as d,w as a,g as s,d as e,m as f,C as n,v as _,x as g,z as t}from"./modules/vue-MxEj1wwt.js";import{I as k}from"./slidev/default-Doyf7Q8E.js";import{u as v,f as x}from"./slidev/context-7wT262na.js";import"./index-BJGPPQSd.js";import"./modules/shiki-DgqCfiDt.js";import"./slidev/VClicks-BN1LAW6A.js";import"./modules/unplugin-icons-DLP6fHNG.js";const w={__name:"slides.md__slidev_23",setup(b){const{$clicksContext:i,$frontmatter:o}=v();return i.setup(),(h,l)=>{const p=c,r=u;return m(),d(k,_(g(t(x)(t(o),22))),{default:a(()=>[l[2]||(l[2]=s("h1",null,"📊 模式对比图",-1)),e(p,f({},{title:"",ranges:[]}),{default:a(()=>[...l[0]||(l[0]=[s("pre",{class:"shiki shiki-themes vitesse-dark vitesse-light slidev-code",style:{"--shiki-dark":"#dbd7caee","--shiki-light":"#393a34","--shiki-dark-bg":"#121212","--shiki-light-bg":"#ffffff"}},[s("code",{class:"language-text"},[s("span",{class:"line"},[s("span",null," ┌──────────────────────────────────────────────────────┐")]),n(`
+`),s("span",{class:"line"},[s("span",null," │              互联网 (Internet)                        │")]),n(`
+`),s("span",{class:"line"},[s("span",null," └────────────────────────┬─────────────────────────────┘")]),n(`
+`),s("span",{class:"line"},[s("span",null,"                          │")]),n(`
+`),s("span",{class:"line"},[s("span",null,"         ┌────────────────┼────────────────┐")]),n(`
+`),s("span",{class:"line"},[s("span",null,"         │                │                │")]),n(`
+`),s("span",{class:"line"},[s("span",null,"  ┌──────▼──────┐  ┌──────▼──────┐  ┌──────▼──────┐")]),n(`
+`),s("span",{class:"line"},[s("span",null,"  │  桥接模式    │  │  NAT模式    │  │ 仅主机模式   │")]),n(`
+`),s("span",{class:"line"},[s("span",null,"  │─────────── │  │─────────── │  │─────────── │")]),n(`
+`),s("span",{class:"line"},[s("span",null,"  │ 虚拟机有    │  │ 虚拟机通过  │  │ 虚拟机与    │")]),n(`
+`),s("span",{class:"line"},[s("span",null,"  │ 独立公网IP  │  │ 宿主机上网  │  │ 外网隔离    │")]),n(`
+`),s("span",{class:"line"},[s("span",null,"  └─────────────┘  └─────────────┘  └─────────────┘")])])],-1)])]),_:1},16),e(r,null,{default:a(()=>[...l[1]||(l[1]=[s("div",{class:"mt-4 p-4 bg-blue-500/10 rounded-lg"},[s("blockquote",null,[s("p",null,[n("💡 "),s("strong",null,"为什么我们用 NAT？"),n(" 实验室网络有限，NAT 模式不占用真实 IP，方便统一管理")])])],-1)])]),_:1})]),_:1},16)}}};export{w as default};

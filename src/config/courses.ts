@@ -22,11 +22,7 @@ export const courses: Course[] = [
         icon: "📊",
         units: [
             { id: "unit01-lesson01", title: "第1次课：初识大数据", available: true },
-            {
-                id: "unit01-lesson02",
-                title: "第2次课：Linux进阶与网络配置",
-                available: false,
-            },
+            { id: "unit01-lesson02", title: "第2次课：Linux进阶与网络配置", available: true },
             {
                 id: "unit02-lesson03",
                 title: "第3次课：HDFS初探与伪分布式部署",
