@@ -52,7 +52,7 @@ export const courses: Course[] = [
         units: [
             { id: "unit01-lesson01", title: "第1次课：Java Web 概述与开发环境搭建", available: true },
             { id: "unit02-lesson02", title: "第2次课：HTML 与 JavaScript 基础", available: true },
-            { id: "unit03-lesson03", title: "第3次课：JSP 基本语法", available: false },
+            { id: "unit03-lesson03", title: "第3次课：JSP 基本语法", available: true },
             { id: "unit03-lesson04", title: "第4次课：JSP 内置对象与会话管理", available: false },
             { id: "unit04-lesson05", title: "第5次课：JDBC 数据库访问（上）——连接与查询", available: false },
             { id: "unit04-lesson06", title: "第6次课：JDBC 数据库操作（下）——增删改与安全", available: false },
