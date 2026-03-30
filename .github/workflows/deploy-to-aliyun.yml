@@ -24,19 +24,19 @@ jobs:
         with:
           fetch-depth: 0  # 获取所有历史记录
 
-      # 2. 设置 Node.js 环境
+      # 2. 安装 pnpm
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+          run_install: false
+
+      # 3. 设置 Node.js 环境（必须在 pnpm 之后）
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
-
-      # 3. 安装 pnpm
-      - name: 📦 Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: false
 
       # 4. 安装依赖
       - name: 📦 Install dependencies
