@@ -42,7 +42,13 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install
 
-      # 5. 运行构建（GitHub Actions 中先构建）
+      # 5. 修复 signOut 跳转问题（在构建前修改源码）
+      - name: 🩹 Fix signOut redirect
+        run: |
+          sed -i 's/await signOut();/await signOut({ redirectTo: "\/login" });/g' src/app/page.tsx
+          echo "✅ Fixed signOut redirect"
+
+      # 6. 运行构建（GitHub Actions 中先构建）
       - name: 🔨 Build Next.js
         run: pnpm build
 
