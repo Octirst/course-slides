@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // 静态资源使用相对路径，适配 IP 和域名访问
-  assetPrefix: ".",
+  assetPrefix: "",
   
   async rewrites() {
     return [
