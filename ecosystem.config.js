@@ -6,6 +6,7 @@ module.exports = {
     cwd: '/var/www/course-slides',
     instances: 2,  // 根据服务器 CPU 核心数调整
     exec_mode: 'cluster',  // 集群模式，充分利用多核 CPU
+    env_file: '/var/www/course-slides/.env.production',  // 加载环境变量文件
     env: {
       NODE_ENV: 'production',
       PORT: 3000
