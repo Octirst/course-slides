@@ -3,8 +3,7 @@ name: 🚀 Deploy to Aliyun
 on:
   push:
     branches:
-      - main  # 推送到 main 分支时触发部署
-      # - master  # 如果使用 master 分支，取消注释
+      - main  # 只监听 main 分支
 
   # 允许手动触发部署
   workflow_dispatch:
