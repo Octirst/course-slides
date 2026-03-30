@@ -90,16 +90,18 @@ jobs:
       # 9. 在服务器上执行部署
       - name: 🚀 Deploy on Aliyun server
         run: |
+          DEPLOY_PACKAGE="deploy-${{ github.sha }}.tar.gz"
+          
           ssh -o StrictHostKeyChecking=no \
-            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }} << 'ENDSSH'
+            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }} << ENDSSH
             #!/bin/bash
             set -e
             
             DEPLOY_PATH="/var/www/course-slides"
-            DEPLOY_PACKAGE=~/deploy-*.tar.gz
+            DEPLOY_PACKAGE="$DEPLOY_PACKAGE"
             
             echo "📂 进入部署目录..."
-            cd $DEPLOY_PATH
+            cd \$DEPLOY_PATH
             
             echo "🛑 停止当前应用..."
             pm2 stop course-slides || true
@@ -108,10 +110,10 @@ jobs:
             rm -rf .next public node_modules
             
             echo "📦 解压新版本..."
-            tar -xzf ~/deploy-*.tar.gz
+            tar -xzf ~/\$DEPLOY_PACKAGE
             
             echo "🧹 清理部署包..."
-            rm -f ~/deploy-*.tar.gz
+            rm -f ~/\$DEPLOY_PACKAGE
             
             echo "🚀 启动应用..."
             pm2 restart course-slides || pm2 start ecosystem.config.js
