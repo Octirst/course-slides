@@ -42,7 +42,21 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install
 
-      # 5. 运行构建（GitHub Actions 中先构建）
+      # 5. 确保 signOut 有 redirectTo 参数（防止跳转到 undefined）
+      - name: 🩹 Fix signOut redirect
+        run: |
+          # 检查并修复 signOut 调用
+          if grep -q 'await signOut();' src/app/page.tsx; then
+            sed -i 's/await signOut();/await signOut({ redirectTo: "\/login" });/g' src/app/page.tsx
+            echo "✅ Fixed signOut redirect"
+          elif grep -q 'await signOut({ redirectTo:' src/app/page.tsx; then
+            echo "ℹ️ signOut redirect already correct"
+          else
+            echo "⚠️ signOut pattern not found, checking file..."
+            grep -n "signOut" src/app/page.tsx || true
+          fi
+
+      # 6. 运行构建（GitHub Actions 中先构建）
       - name: 🔨 Build Next.js
         run: pnpm build
 
