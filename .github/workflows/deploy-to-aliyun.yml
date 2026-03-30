@@ -1,0 +1,137 @@
+name: 🚀 Deploy to Aliyun
+
+on:
+  push:
+    branches:
+      - main  # 推送到 main 分支时触发部署
+      # - master  # 如果使用 master 分支，取消注释
+
+  # 允许手动触发部署
+  workflow_dispatch:
+
+# 取消正在运行的部署，优先执行最新的
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. 检出代码
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取所有历史记录
+
+      # 2. 设置 Node.js 环境
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      # 3. 安装 pnpm
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      # 4. 安装依赖
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 5. 运行构建（GitHub Actions 中先构建）
+      - name: 🔨 Build Next.js
+        run: pnpm build
+
+      - name: 📊 Build Slidev slides
+        run: |
+          chmod +x scripts/build-slides.sh
+          ./scripts/build-slides.sh
+
+      # 6. 配置 SSH 密钥
+      - name: 🔑 Setup SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.ALIYUN_SSH_PRIVATE_KEY }}
+
+      # 7. 添加到 known_hosts（禁用严格检查）
+      - name: 🛡️ Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.ALIYUN_SERVER_HOST }} >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      # 8. 上传部署文件
+      - name: 📤 Upload to Aliyun server
+        run: |
+          DEPLOY_PACKAGE="deploy-${{ github.sha }}.tar.gz"
+          
+          # 创建部署包
+          tar -czf $DEPLOY_PACKAGE \
+            .next \
+            public \
+            node_modules \
+            package.json \
+            ecosystem.config.js \
+            .env.production.example
+
+          # 上传到服务器
+          scp -o StrictHostKeyChecking=no \
+            $DEPLOY_PACKAGE \
+            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }}:~/
+
+          # 清理本地包
+          rm -f $DEPLOY_PACKAGE
+
+      # 9. 在服务器上执行部署
+      - name: 🚀 Deploy on Aliyun server
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }} << 'ENDSSH'
+            #!/bin/bash
+            set -e
+            
+            DEPLOY_PATH="/var/www/course-slides"
+            DEPLOY_PACKAGE=~/deploy-*.tar.gz
+            
+            echo "📂 进入部署目录..."
+            cd $DEPLOY_PATH
+            
+            echo "🛑 停止当前应用..."
+            pm2 stop course-slides || true
+            
+            echo "🗑️  清理旧版本..."
+            rm -rf .next public node_modules
+            
+            echo "📦 解压新版本..."
+            tar -xzf ~/deploy-*.tar.gz
+            
+            echo "🧹 清理部署包..."
+            rm -f ~/deploy-*.tar.gz
+            
+            echo "🚀 启动应用..."
+            pm2 restart course-slides || pm2 start ecosystem.config.js
+            
+            echo "⏳ 等待应用启动..."
+            sleep 3
+            
+            echo "✅ 检查应用状态..."
+            pm2 status course-slides
+            
+            echo "📋 查看最新日志..."
+            pm2 logs course-slides --lines 5 --nostream
+          ENDSSH
+
+      # 10. 部署成功通知
+      - name: ✅ Deployment complete
+        run: |
+          echo "========================================"
+          echo "✅ 部署成功！"
+          echo "========================================"
+          echo "📝 访问地址：http://${{ secrets.ALIYUN_SERVER_HOST }}"
+          echo "🔗 Commit: ${{ github.sha }}"
+          echo "👤 Author: ${{ github.actor }}"
