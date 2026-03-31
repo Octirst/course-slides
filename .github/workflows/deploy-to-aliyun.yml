@@ -42,36 +42,7 @@ jobs:
       - name: 📦 Install dependencies
         run: pnpm install
 
-      # 5. 修复 signOut 跳转问题（在构建前修改源码）
-      - name: 🩹 Fix signOut redirect
-        run: |
-          sed -i 's/await signOut();/await signOut({ redirectTo: "\/login" });/g' src/app/page.tsx
-          echo "✅ Fixed signOut redirect"
-
-      # 6. 运行构建（GitHub Actions 中先构建）
-      - name: 🔨 Build Next.js
-        run: pnpm build
-
-      - name: 📊 Build Slidev slides
-        run: |
-          chmod +x scripts/build-slides.sh
-          ./scripts/build-slides.sh
-
-      # 6. 配置 SSH 密钥（添加调试信息）
-      - name: 🔑 Setup SSH key
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.ALIYUN_SSH_PRIVATE_KEY }}
-
-      # 7. 测试 SSH 连接
-      - name: 🧪 Test SSH connection
-        run: |
-          echo "Testing SSH connection to ${{ secrets.ALIYUN_SERVER_HOST }}..."
-          ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \
-            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }} \
-            "echo 'SSH connection successful!' && whoami && pwd"
-
-      # 8. 创建生产环境配置文件
+      # 5. 创建生产环境配置文件（构建前需要）
       - name: 🔧 Create .env.production
         run: |
           cat > .env.production << EOF
@@ -83,7 +54,36 @@ jobs:
           EOF
           echo "✅ Created .env.production"
 
-      # 9. 上传部署文件（跳过 known_hosts 检查）
+      # 6. 修复 signOut 跳转问题（在构建前修改源码）
+      - name: 🩹 Fix signOut redirect
+        run: |
+          sed -i 's/await signOut();/await signOut({ redirectTo: "\/login" });/g' src/app/page.tsx
+          echo "✅ Fixed signOut redirect"
+
+      # 7. 运行构建
+      - name: 🔨 Build Next.js
+        run: pnpm build
+
+      - name: 📊 Build Slidev slides
+        run: |
+          chmod +x scripts/build-slides.sh
+          ./scripts/build-slides.sh
+
+      # 8. 配置 SSH 密钥
+      - name: 🔑 Setup SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.ALIYUN_SSH_PRIVATE_KEY }}
+
+      # 9. 测试 SSH 连接
+      - name: 🧪 Test SSH connection
+        run: |
+          echo "Testing SSH connection to ${{ secrets.ALIYUN_SERVER_HOST }}..."
+          ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 \
+            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }} \
+            "echo 'SSH connection successful!' && whoami && pwd"
+
+      # 10. 上传部署文件（跳过 known_hosts 检查）
       - name: 📤 Upload to Aliyun server
         run: |
           DEPLOY_PACKAGE="deploy-${{ github.sha }}.tar.gz"
@@ -105,7 +105,7 @@ jobs:
           # 清理本地包
           rm -f $DEPLOY_PACKAGE
 
-      # 10. 在服务器上执行部署
+      # 11. 在服务器上执行部署
       - name: 🚀 Deploy on Aliyun server
         run: |
           DEPLOY_PACKAGE="deploy-${{ github.sha }}.tar.gz"
@@ -146,7 +146,7 @@ jobs:
             pm2 logs course-slides --lines 5 --nostream
           ENDSSH
 
-      # 11. 部署成功通知
+      # 12. 部署成功通知
       - name: ✅ Deployment complete
         run: |
           echo "========================================"
