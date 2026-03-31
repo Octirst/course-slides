@@ -1,7 +1,11 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-const STUDENT_PASSWORD = process.env.STUDENT_PASSWORD || "zbti-ai-cs2026";
+const STUDENT_PASSWORD = process.env.STUDENT_PASSWORD;
+
+if (!STUDENT_PASSWORD) {
+    throw new Error("STUDENT_PASSWORD environment variable is required");
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
