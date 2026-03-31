@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        // 静态资源（_next/static）长期缓存
+        // 静态资源（_next/static）长期缓存 - 文件名带 hash，安全
         source: "/_next/static/:path*",
         headers: [
           {
@@ -24,15 +24,17 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Slidev 幻灯片静态文件长期缓存
-        source: "/slides/:path*",
+        // Slidev 幻灯片 assets 目录（JS/CSS/字体等，带 hash）
+        source: "/slides/:path*/assets/:file*",
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=3600, stale-while-revalidate=86400",
+            value: "public, max-age=31536000, immutable",
           },
         ],
       },
+      // 注意：Slidev HTML 入口不设置缓存头，由浏览器默认处理
+      // 这样每次更新 slides 后用户都能看到最新内容
     ];
   },
 
