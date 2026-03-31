@@ -16,7 +16,10 @@ export default auth((req) => {
         if (isLoggedIn) {
             return NextResponse.redirect(new URL("/", req.url));
         }
-        return NextResponse.next();
+        // 登录页面添加缓存头（静态页面）
+        const response = NextResponse.next();
+        response.headers.set("Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
+        return response;
     }
 
     // Protect all other routes
@@ -24,7 +27,10 @@ export default auth((req) => {
         return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    return NextResponse.next();
+    // 已登录页面：短时间缓存，减少重复请求的 auth 验证压力
+    const response = NextResponse.next();
+    response.headers.set("Cache-Control", "private, max-age=30, stale-while-revalidate=60");
+    return response;
 });
 
 export const config = {
