@@ -85,63 +85,71 @@ jobs:
 
       # 10. 上传部署文件（跳过 known_hosts 检查）
       - name: 📤 Upload to Aliyun server
+        timeout-minutes: 5
         run: |
           DEPLOY_PACKAGE="deploy-${{ github.sha }}.tar.gz"
 
-          # 创建部署包
+          echo "📦 创建部署包（不包含 node_modules）..."
           tar -czf $DEPLOY_PACKAGE \
             .next \
             public \
-            node_modules \
             package.json \
+            pnpm-lock.yaml \
             ecosystem.config.js \
             .env.production
 
-          # 上传到服务器
+          echo "📊 包大小："
+          ls -lh $DEPLOY_PACKAGE
+
+          echo "☁️ 上传到服务器..."
           scp -o StrictHostKeyChecking=no \
             $DEPLOY_PACKAGE \
             ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }}:~/
 
-          # 清理本地包
+          echo "✅ 上传完成"
           rm -f $DEPLOY_PACKAGE
 
       # 11. 在服务器上执行部署
       - name: 🚀 Deploy on Aliyun server
+        timeout-minutes: 10
         run: |
           DEPLOY_PACKAGE="deploy-${{ github.sha }}.tar.gz"
-          
+
           ssh -o StrictHostKeyChecking=no \
             ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }} << ENDSSH
             #!/bin/bash
             set -e
-            
+
             DEPLOY_PATH="/var/www/course-slides"
             DEPLOY_PACKAGE="$DEPLOY_PACKAGE"
-            
+
             echo "📂 进入部署目录..."
             cd \$DEPLOY_PATH
-            
+
             echo "🛑 停止当前应用..."
             pm2 stop course-slides || true
-            
+
             echo "🗑️  清理旧版本..."
             rm -rf .next public node_modules
-            
+
             echo "📦 解压新版本..."
             tar -xzf ~/\$DEPLOY_PACKAGE
-            
+
+            echo "📦 安装依赖..."
+            pnpm install --frozen-lockfile
+
             echo "🧹 清理部署包..."
             rm -f ~/\$DEPLOY_PACKAGE
-            
+
             echo "🚀 启动应用..."
             pm2 restart course-slides || pm2 start ecosystem.config.js
-            
+
             echo "⏳ 等待应用启动..."
             sleep 3
-            
+
             echo "✅ 检查应用状态..."
             pm2 status course-slides
-            
+
             echo "📋 查看最新日志..."
             pm2 logs course-slides --lines 5 --nostream
           ENDSSH
