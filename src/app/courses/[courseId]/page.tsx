@@ -8,7 +8,8 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-    return courses.map((course) => ({
+    const courseList = Array.isArray(courses) ? courses : Object.values(courses);
+    return courseList.map((course: any) => ({
         courseId: course.id,
     }));
 }

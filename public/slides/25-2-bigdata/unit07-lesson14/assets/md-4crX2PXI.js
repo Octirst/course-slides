@@ -1,8 +1,0 @@
-import{_ as r}from"./slidev/CodeBlockWrapper.vue_vue_type_script_setup_true_lang-BZD1vHQ-.js";import{o as p,b as c,w as a,g as s,d as u,m as d,ad as n,v as m,x as f,T as t}from"./modules/vue-DsKEqm3i.js";import{I as _}from"./slidev/center-DJ6yGSmy.js";import{u as k,f as g}from"./slidev/context-DQlSeC4b.js";import"./modules/unplugin-icons-BGSKkvx_.js";import"./index-CpfU-Oex.js";import"./modules/shiki-CfdZXfaF.js";const N={__name:"slides.md__slidev_3",setup(h){const{$clicksContext:l,$frontmatter:i}=k();return l.setup(),(x,e)=>{const o=r;return p(),c(_,m(f(t(g)(t(i),2))),{default:a(()=>[e[1]||(e[1]=s("h1",null,"🗺️ 回顾：你学到了什么",-1)),u(o,d({},{title:"",ranges:[]}),{default:a(()=>[...e[0]||(e[0]=[s("pre",{class:"shiki shiki-themes vitesse-dark vitesse-light slidev-code",style:{"--shiki-dark":"#dbd7caee","--shiki-light":"#393a34","--shiki-dark-bg":"#121212","--shiki-light-bg":"#ffffff"}},[s("code",{class:"language-text"},[s("span",{class:"line"},[s("span",null,"大数据平台全景")]),n(`
-`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 1: 🖥️ Linux 环境准备")]),n(`
-`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 2: 📦 HDFS 分布式存储")]),n(`
-`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 3: 🏬 Hive 数据仓库 ⭐")]),n(`
-`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 4: 🚰 Flume 日志采集")]),n(`
-`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 5: ⚡ HBase 快速查询")]),n(`
-`),s("span",{class:"line"},[s("span",null,"├── ✅ Unit 6: 🛡️ ZK + HA 高可用")]),n(`
-`),s("span",{class:"line"},[s("span",null,"└── 📍 Unit 7: 🚀 综合项目 ← 把所有技术串起来！")])])],-1)])]),_:1},16)]),_:1},16)}}};export{N as default};
