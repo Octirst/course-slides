@@ -136,7 +136,7 @@ jobs:
             tar -xzf ~/\$DEPLOY_PACKAGE
 
             echo "📦 安装依赖..."
-            pnpm install --frozen-lockfile
+            pnpm install --force
 
             echo "🧹 清理部署包..."
             rm -f ~/\$DEPLOY_PACKAGE
