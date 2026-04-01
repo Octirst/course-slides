@@ -111,7 +111,7 @@ jobs:
 
       # 11. 在服务器上执行部署
       - name: 🚀 Deploy on Aliyun server
-        timeout-minutes: 10
+        timeout-minutes: 20
         run: |
           DEPLOY_PACKAGE="deploy-${{ github.sha }}.tar.gz"
 
@@ -136,7 +136,8 @@ jobs:
             tar -xzf ~/\$DEPLOY_PACKAGE
 
             echo "📦 安装依赖..."
-            pnpm install --force
+            npm config set registry https://registry.npmmirror.com
+            npm install
 
             echo "🧹 清理部署包..."
             rm -f ~/\$DEPLOY_PACKAGE
