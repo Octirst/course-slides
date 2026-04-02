@@ -16,7 +16,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       # 1. 检出代码
       - name: 📥 Checkout code
@@ -83,45 +83,49 @@ jobs:
             ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }} \
             "echo 'SSH connection successful!' && whoami && pwd"
 
-      # 10. 上传部署文件（跳过 known_hosts 检查）
-      - name: 📤 Upload to Aliyun server
-        timeout-minutes: 5
+      # 10. 增量上传部署文件（使用 rsync）
+      - name: 📤 Upload to Aliyun server (incremental)
+        timeout-minutes: 10
         run: |
-          DEPLOY_PACKAGE="deploy-${{ github.sha }}.tar.gz"
+          echo "📦 准备上传..."
 
-          echo "📦 创建部署包（不包含 node_modules）..."
-          tar -czf $DEPLOY_PACKAGE \
-            .next \
-            public \
-            package.json \
-            pnpm-lock.yaml \
-            ecosystem.config.js \
-            .env.production
+          # 确保服务器目录存在
+          ssh -o StrictHostKeyChecking=no \
+            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }} \
+            "mkdir -p /var/www/course-slides"
 
-          echo "📊 包大小："
-          ls -lh $DEPLOY_PACKAGE
+          # 使用 rsync 增量上传 .next 目录（Next.js 构建输出）
+          echo "📤 同步 .next 目录..."
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            .next/ \
+            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }}:/var/www/course-slides/.next/
 
-          echo "☁️ 上传到服务器..."
+          # 使用 rsync 增量上传 public 目录（slides 等静态资源）
+          echo "📤 同步 public 目录..."
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            public/ \
+            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }}:/var/www/course-slides/public/
+
+          # 上传配置文件（这些文件较小，直接覆盖）
+          echo "📤 同步配置文件..."
           scp -o StrictHostKeyChecking=no \
-            $DEPLOY_PACKAGE \
-            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }}:~/
+            package.json ecosystem.config.js .env.production \
+            ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }}:/var/www/course-slides/
 
           echo "✅ 上传完成"
-          rm -f $DEPLOY_PACKAGE
 
       # 11. 在服务器上执行部署
       - name: 🚀 Deploy on Aliyun server
-        timeout-minutes: 20
+        timeout-minutes: 10
         run: |
-          DEPLOY_PACKAGE="deploy-${{ github.sha }}.tar.gz"
-
           ssh -o StrictHostKeyChecking=no \
             ${{ secrets.ALIYUN_SERVER_USER }}@${{ secrets.ALIYUN_SERVER_HOST }} << ENDSSH
             #!/bin/bash
             set -e
 
             DEPLOY_PATH="/var/www/course-slides"
-            DEPLOY_PACKAGE="$DEPLOY_PACKAGE"
 
             echo "📂 进入部署目录..."
             cd \$DEPLOY_PATH
@@ -129,18 +133,14 @@ jobs:
             echo "🛑 停止当前应用..."
             pm2 stop course-slides || true
 
-            echo "🗑️  清理旧版本..."
-            rm -rf .next public node_modules
-
-            echo "📦 解压新版本..."
-            tar -xzf ~/\$DEPLOY_PACKAGE
-
-            echo "📦 安装依赖..."
-            npm config set registry https://registry.npmmirror.com
-            npm install
-
-            echo "🧹 清理部署包..."
-            rm -f ~/\$DEPLOY_PACKAGE
+            echo "📦 安装依赖（如果 package.json 有变化）..."
+            if [ ! -d "node_modules" ] || [ "package.json" -nt "node_modules/.package.json" ]; then
+              echo "检测到依赖变化，执行 npm install..."
+              npm config set registry https://registry.npmmirror.com
+              npm install
+            else
+              echo "依赖未变化，跳过安装"
+            fi
 
             echo "🚀 启动应用..."
             pm2 restart course-slides || pm2 start ecosystem.config.js
