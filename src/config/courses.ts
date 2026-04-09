@@ -29,7 +29,7 @@ export const courses: Course[] = [
                 available: true,
             },
             { id: "unit02-lesson04", title: "第4次课：完全分布式集群搭建", available: true },
-            { id: "unit03-lesson05", title: "第五次课：HDFS深入与MapReduce入门", available: false },
+            { id: "unit03-lesson05", title: "第5次课：HDFS深入与MapReduce入门", available: true },
             { id: "unit03-lesson06", title: "第6次课：HiveSQL查询与商业指标分析", available: false },
             { id: "unit03-lesson07", title: "第7次课：多表关联与门店经营决策", available: false },
             { id: "unit04-lesson08", title: "第8次课：Flume架构与基础采集配置", available: false },
