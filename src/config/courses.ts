@@ -56,7 +56,7 @@ export const courses: Course[] = [
             { id: "unit03-lesson04", title: "第4次课：JSP 内置对象与会话管理", available: true },
             { id: "unit04-lesson05", title: "第5次课：JDBC 数据库访问（上）——连接与查询", available: true },
             { id: "unit04-lesson06", title: "第6次课：JDBC 数据库操作（下）——增删改与安全", available: true },
-            { id: "unit05-lesson07", title: "第7次课：Servlet 编程基础", available: false },
+            { id: "unit05-lesson07", title: "第7次课：Servlet 编程基础", available: true },
             { id: "unit05-lesson08", title: "第8次课：Servlet 进阶与会员注册", available: false },
             { id: "unit06-lesson09", title: "第9次课：EL 表达式与 JSTL 标签", available: false },
             { id: "unit07-lesson10", title: "第10次课：Ajax 异步交互", available: false },
