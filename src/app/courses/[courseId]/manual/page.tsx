@@ -395,30 +395,30 @@ export default async function ManualPage({ params }: PageProps) {
                                     <ol className="list-decimal list-inside text-gray-600 space-y-1">
                                         <li>VMware → 右键 master → 管理 → 克隆</li>
                                         <li>克隆类型：创建完整克隆</li>
-                                        <li>第一次克隆：虚拟机名称设为 <strong>slave01</strong></li>
-                                        <li>第二次克隆：虚拟机名称设为 <strong>slave02</strong></li>
-                                        <li>启动 slave01、slave02</li>
+                                        <li>第一次克隆：虚拟机名称设为 <strong>slave1</strong></li>
+                                        <li>第二次克隆：虚拟机名称设为 <strong>slave2</strong></li>
+                                        <li>启动 slave1、slave2</li>
                                     </ol>
                                 </div>
                             </div>
 
-                            {/* 2.3 修改slave01主机名 */}
+                            {/* 2.3 修改slave1主机名 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.3 在 slave01 上修改主机名</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.3 在 slave1 上修改主机名</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div>hostnamectl set-hostname slave01  # 设置主机名为slave01</div>
+                                    <div>hostnamectl set-hostname slave1  # 设置主机名为slave1</div>
                                 </div>
                             </div>
 
-                            {/* 2.4 修改slave01IP */}
+                            {/* 2.4 修改slave1IP */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.4 在 slave01 上修改 IP 地址</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.4 在 slave1 上修改 IP 地址</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>vi /etc/sysconfig/network-scripts/ifcfg-ens33  # 打开网卡配置文件</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 修改以下内容：</div>
-                                    <div>IPADDR=192.168.38.131  # 改为slave01的IP</div>
+                                    <div>IPADDR=192.168.38.131  # 改为slave1的IP</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 删除UUID行（让系统重新生成）</div>
@@ -429,11 +429,11 @@ export default async function ManualPage({ params }: PageProps) {
                                 <p className="text-gray-600 text-sm">作用：避免 IP 和 UUID 冲突导致网络异常</p>
                             </div>
 
-                            {/* 2.5 slave02同理 */}
+                            {/* 2.5 slave2同理 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.5 在 slave02 上执行相同操作</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.5 在 slave2 上执行相同操作</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div>hostnamectl set-hostname slave02  # 设置主机名为slave02</div>
+                                    <div>hostnamectl set-hostname slave2  # 设置主机名为slave2</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>vi /etc/sysconfig/network-scripts/ifcfg-ens33  # IP改为192.168.38.132</div>
@@ -464,8 +464,8 @@ export default async function ManualPage({ params }: PageProps) {
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 在文件末尾追加以下内容：</div>
                                     <div>192.168.38.130 master</div>
-                                    <div>192.168.38.131 slave01</div>
-                                    <div>192.168.38.132 slave02</div>
+                                    <div>192.168.38.131 slave1</div>
+                                    <div>192.168.38.132 slave2</div>
                                 </div>
                                 <p className="text-gray-600 text-sm">作用：主机名解析，让节点能通过主机名互相访问</p>
                             </div>
@@ -474,32 +474,55 @@ export default async function ManualPage({ params }: PageProps) {
                             <div className="bg-gray-50 p-4 rounded">
                                 <h3 className="font-semibold text-gray-700 mb-2">2.8 配置 SSH 免密互通（在 master 上执行）</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div>ssh-copy-id slave01  # 将公钥复制到slave01</div>
+                                    <div>ssh-copy-id slave1  # 将公钥复制到slave1</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div>ssh-copy-id slave02  # 将公钥复制到slave02</div>
+                                    <div>ssh-copy-id slave2  # 将公钥复制到slave2</div>
                                 </div>
-                                <p className="text-gray-600 text-sm">作用：让 master 能免密登录 slave01、slave02</p>
+                                <p className="text-gray-600 text-sm">作用：让 master 能免密登录 slave1、slave2</p>
                             </div>
 
                             {/* 2.9 SSH免密反向 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.9 在 slave01、slave02 上配置 SSH 免密登录 master</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.9 在 slave1、slave2 上配置 SSH 免密登录 master</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div className="text-yellow-400"># 在 slave01 上执行：</div>
+                                    <div className="text-yellow-400"># 在 slave1 上执行：</div>
                                     <div>ssh-keygen -t rsa  # 生成密钥</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>ssh-copy-id master  # 复制公钥到master</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div className="text-yellow-400"># 在 slave02 上执行相同操作</div>
+                                    <div className="text-yellow-400"># 在 slave2 上执行相同操作</div>
                                 </div>
                             </div>
 
-                            {/* 2.10 修改core-site.xml */}
+                            {/* 2.10 验证SSH免密 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.10 在 master 上修改 core-site.xml</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.10 验证 SSH 免密登录是否成功</h3>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 master 上测试：</div>
+                                    <div>ssh slave1  # 应能免密登录，无需输入密码</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>ssh slave2  # 应能免密登录</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 slave1 上测试：</div>
+                                    <div>ssh master  # 应能免密登录</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 在 slave2 上测试：</div>
+                                    <div>ssh master  # 应能免密登录</div>
+                                </div>
+                                <div className="bg-yellow-50 p-2 rounded text-sm text-yellow-700">
+                                    测试成功后，输入 exit 退出 SSH 会话
+                                </div>
+                            </div>
+
+                            {/* 2.11 修改core-site.xml */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">2.11 在 master 上修改 core-site.xml</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>vi $HADOOP_HOME/etc/hadoop/core-site.xml  # 打开核心配置文件</div>
                                 </div>
@@ -512,9 +535,9 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 2.11 修改hdfs-site.xml */}
+                            {/* 2.12 修改hdfs-site.xml */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.11 在 master 上修改 hdfs-site.xml</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.12 在 master 上修改 hdfs-site.xml</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>vi $HADOOP_HOME/etc/hadoop/hdfs-site.xml  # 打开HDFS配置文件</div>
                                 </div>
@@ -527,9 +550,9 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 2.12 修改yarn-site.xml */}
+                            {/* 2.13 修改yarn-site.xml */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.12 在 master 上修改 yarn-site.xml</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.13 在 master 上修改 yarn-site.xml</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>vi $HADOOP_HOME/etc/hadoop/yarn-site.xml  # 打开YARN配置文件</div>
                                 </div>
@@ -542,48 +565,51 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 2.13 配置workers */}
+                            {/* 2.14 配置workers */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.13 配置 workers 文件</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.14 配置 workers 文件</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>vi $HADOOP_HOME/etc/hadoop/workers  # 打开workers文件</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 替换 localhost 为以下内容（删除localhost，添加三行）：</div>
                                     <div>master</div>
-                                    <div>slave01</div>
-                                    <div>slave02</div>
+                                    <div>slave1</div>
+                                    <div>slave2</div>
                                 </div>
                                 <p className="text-gray-600 text-sm">作用：告诉 Hadoop 哪些节点运行 DataNode</p>
                             </div>
 
-                            {/* 2.14 分发配置文件 */}
+                            {/* 2.15 分发配置文件 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.14 分发配置文件到 slave 节点</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.15 分发配置文件到 slave 节点</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div>scp -r $HADOOP_HOME/etc/hadoop slave01:$HADOOP_HOME/etc/  # 复制到slave01</div>
+                                    <div>scp -r $HADOOP_HOME/etc/hadoop slave1:$HADOOP_HOME/etc/  # 复制到slave1</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
-                                    <div>scp -r $HADOOP_HOME/etc/hadoop slave02:$HADOOP_HOME/etc/  # 复制到slave02</div>
+                                    <div>scp -r $HADOOP_HOME/etc/hadoop slave2:$HADOOP_HOME/etc/  # 复制到slave2</div>
                                 </div>
                                 <p className="text-gray-600 text-sm">作用：让 slave 节点使用相同配置</p>
                             </div>
 
-                            {/* 2.15 删除旧数据 */}
+                            {/* 2.16 删除旧数据 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.15 删除旧数据目录（三台机器都要执行）</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.16 删除旧数据目录（三台机器都要执行）</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>rm -rf $HADOOP_HOME/data  # 删除数据目录</div>
                                 </div>
-                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>rm -rf $HADOOP_HOME/logs  # 删除日志目录</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
+                                    <div>rm -rf $HADOOP_HOME/tmp  # 删除临时目录</div>
                                 </div>
                                 <p className="text-gray-600 text-sm">作用：避免 clusterID 不一致导致 DataNode 无法启动</p>
                             </div>
 
-                            {/* 2.16 格式化NameNode */}
+                            {/* 2.17 格式化NameNode */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.16 格式化 NameNode（只在 master 上执行）</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.17 格式化 NameNode（只在 master 上执行）</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>hdfs namenode -format  # 初始化HDFS元数据</div>
                                 </div>
@@ -592,28 +618,34 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 2.17 启动集群 */}
+                            {/* 2.18 启动集群 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.17 启动完全分布式集群（在 master 上执行）</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.18 启动完全分布式集群（在 master 上执行）</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>start-all.sh  # 启动HDFS和YARN（会自动启动slave节点）</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                
+                                <div className="text-yellow-400"># 也可以用下面两个命令代替</div>
+                                    <div>start-yarn.sh  # 启动YARN服务（ResourceManager、NodeManager）</div>
                                     <div>start-all.sh  # 启动HDFS和YARN（会自动启动slave节点）</div>
                                 </div>
                             </div>
 
-                            {/* 2.18 验证master */}
+                            {/* 2.19 验证master */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.18 在 master 上验证进程</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.19 在 master 上验证进程</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>jps  # 查看Java进程</div>
                                 </div>
                                 <div className="bg-yellow-50 p-2 rounded text-sm text-yellow-700">
-                                    master 应看到：NameNode、ResourceManager、DataNode、NodeManager、Jps
+                                    master 应看到：NameNode、ResourceManager、DataNode、NodeManager、SecondaryNameNode、Jps
                                 </div>
                             </div>
 
-                            {/* 2.19 验证slave */}
+                            {/* 2.20 验证slave */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.19 在 slave01、slave02 上验证进程</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.20 在 slave1、slave2 上验证进程</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>jps  # 查看Java进程</div>
                                 </div>
@@ -622,13 +654,13 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 2.20 WebUI验证 */}
+                            {/* 2.21 WebUI验证 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">2.20 WebUI 验证集群状态</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">2.21 WebUI 验证集群状态</h3>
                                 <div className="bg-blue-50 p-3 rounded text-sm">
                                     <p className="text-blue-700">在 Windows 浏览器访问：</p>
                                     <p className="text-gray-600 mt-2">HDFS WebUI：<code className="bg-gray-200 px-1 rounded">http://master的IP:9870</code></p>
-                                    <p className="text-gray-600">应显示 <strong>Live Nodes: 2</strong>（slave01、slave02）</p>
+                                    <p className="text-gray-600">应显示 <strong>Live Nodes: 2</strong>（slave1、slave2）</p>
                                 </div>
                             </div>
                         </div>
