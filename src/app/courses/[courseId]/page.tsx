@@ -65,6 +65,17 @@ export default async function CoursePage({ params }: PageProps) {
                             <p className="text-blue-100 mt-1">{course.description}</p>
                         </div>
                     </div>
+                    {/* 操作手册入口 */}
+                    {courseId === "25-2-bigdata" && (
+                        <div className="mt-4">
+                            <Link
+                                href={`/courses/${courseId}/manual`}
+                                className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg transition text-sm"
+                            >
+                                📖 操作手册
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </div>
 
