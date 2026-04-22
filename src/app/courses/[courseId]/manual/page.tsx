@@ -932,7 +932,6 @@ export default async function ManualPage({ params }: PageProps) {
                                     <div>    &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</div>
                                     <div>    &lt;value&gt;jdbc:mysql://master:3306/hive?useSSL=false&lt;/value&gt;</div>
                                     <div>  &lt;/property&gt;</div>
-                                    <div>  &lt;/property&gt;</div>
                                     <div>  &lt;property&gt;</div>
                                     <div>    &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</div>
                                     <div>    &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</div>
