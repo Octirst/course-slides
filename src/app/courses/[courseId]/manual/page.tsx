@@ -846,32 +846,27 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 在 MySQL 中执行以下命令：</div>
-                                    <div>SET PASSWORD FOR 'root'@'localhost' = PASSWORD('123456');  # 设置root密码</div>
+                                    <div>SET PASSWORD FOR 'root'@'localhost' = PASSWORD('000000');  # 设置root密码</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
                                     <div>FLUSH PRIVILEGES;  # 刷新权限</div>
                                 </div>
                             </div>
 
-                            {/* 4.8 创建hive用户 */}
+                            {/* 4.8 创建hive数据库 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.8 创建 Hive 专用用户和数据库</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.8 创建 Hive 元数据库</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div>mysql -u root -p123456  # 用root登录MySQL</div>
+                                    <div>mysql -u root -p000000  # 用root登录MySQL</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 在 MySQL 中执行：</div>
-                                    <div>CREATE DATABASE hive;  # 创建hive数据库</div>
-                                </div>
-                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
-                                    <div>CREATE USER 'hive'@'%' IDENTIFIED BY 'hive123';  # 创建hive用户</div>
-                                </div>
-                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
-                                    <div>GRANT ALL ON hive.* TO 'hive'@'%';  # 授权</div>
+                                    <div>CREATE DATABASE hive CHARACTER SET utf8;  # 创建hive数据库</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
-                                    <div>FLUSH PRIVILEGES;  # 刷新权限</div>
+                                    <div>exit  # 退出MySQL</div>
                                 </div>
+                                <p className="text-gray-600 text-sm">说明：本课程直接使用 root 用户连接 MySQL，与教材保持一致</p>
                             </div>
 
                             {/* 4.9 Windows上传Hive */}
@@ -929,13 +924,14 @@ export default async function ManualPage({ params }: PageProps) {
                                     <div>vi $HIVE_HOME/conf/hive-site.xml  # 创建配置文件</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
-                                    <div className="text-yellow-400"># 写入以下内容：</div>
+                                    <div className="text-yellow-400"># 写入以下内容（使用 root 用户连接 MySQL）：</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
                                     <div>&lt;configuration&gt;</div>
                                     <div>  &lt;property&gt;</div>
                                     <div>    &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</div>
-                                    <div>    &lt;value&gt;jdbc:mysql://master:3306/hive?createDatabaseIfNotExist=true&amp;useSSL=false&lt;/value&gt;</div>
+                                    <div>    &lt;value&gt;jdbc:mysql://master:3306/hive?useSSL=false&lt;/value&gt;</div>
+                                    <div>  &lt;/property&gt;</div>
                                     <div>  &lt;/property&gt;</div>
                                     <div>  &lt;property&gt;</div>
                                     <div>    &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</div>
@@ -943,42 +939,287 @@ export default async function ManualPage({ params }: PageProps) {
                                     <div>  &lt;/property&gt;</div>
                                     <div>  &lt;property&gt;</div>
                                     <div>    &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</div>
-                                    <div>    &lt;value&gt;hive&lt;/value&gt;</div>
+                                    <div>    &lt;value&gt;root&lt;/value&gt;</div>
                                     <div>  &lt;/property&gt;</div>
                                     <div>  &lt;property&gt;</div>
                                     <div>    &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</div>
-                                    <div>    &lt;value&gt;hive123&lt;/value&gt;</div>
+                                    <div>    &lt;value&gt;000000&lt;/value&gt;</div>
                                     <div>  &lt;/property&gt;</div>
                                     <div>&lt;/configuration&gt;</div>
                                 </div>
                             </div>
 
-                            {/* 4.14 初始化元数据 */}
+                            {/* 4.14 解决guava版本冲突 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.14 初始化 Hive 元数据库</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.14 解决 Guava 版本冲突 ⚠️</h3>
+                                <div className="bg-red-50 p-3 rounded mb-2 text-sm text-red-700">
+                                    <p className="font-semibold">问题说明：</p>
+                                    <p>Hadoop 3.x 使用 guava-27.0-jre.jar，Hive 3.1.2 使用 guava-19.0.jar</p>
+                                    <p>版本不一致会导致初始化元数据报错</p>
+                                </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div>schematool -dbType mysql -initSchema  # 初始化元数据到MySQL</div>
+                                    <div className="text-yellow-400"># 查看版本：</div>
+                                    <div>ls $HADOOP_HOME/share/hadoop/common/lib/ | grep guava  # 查看Hadoop的guava版本</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>ls $HIVE_HOME/lib/ | grep guava  # 查看Hive的guava版本</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 解决方案：删除Hive低版本，复制Hadoop高版本</div>
+                                    <div>rm $HIVE_HOME/lib/guava-19.0.jar  # 删除Hive的低版本guava</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
+                                    <div>cp $HADOOP_HOME/share/hadoop/common/lib/guava-27.0-jre.jar $HIVE_HOME/lib/  # 复制高版本</div>
+                                </div>
+                                <p className="text-gray-600 text-sm">作用：让 Hive 使用与 Hadoop 相同版本的 Guava 库</p>
+                            </div>
+
+                            {/* 4.15 启动Hadoop */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.15 启动 Hadoop 集群 ⚠️</h3>
+                                <div className="bg-yellow-50 p-2 rounded text-sm text-yellow-700 mb-2">
+                                    初始化 Hive 元数据前，必须先启动 Hadoop！
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>start-all.sh  # 启动HDFS和YARN</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>jps  # 验证进程（应显示NameNode、DataNode等）</div>
+                                </div>
+                            </div>
+
+                            {/* 4.16 初始化元数据 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.16 初始化 Hive 元数据库</h3>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>schematool -dbType mysql -initSchema -verbose  # 初始化元数据到MySQL</div>
+                                </div>
+                                <div className="bg-green-50 p-2 rounded text-sm text-green-700">
+                                    成功提示：schemaTool completed
                                 </div>
                                 <p className="text-gray-600 text-sm">作用：将 Hive 表结构信息写入 MySQL hive 数据库</p>
                             </div>
 
-                            {/* 4.15 启动Hive */}
+                            {/* 4.17 查看元数据库 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.15 启动 Hive CLI</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.17 查看 MySQL 元数据库</h3>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>mysql -u root -p000000  # 登录MySQL</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 MySQL 中执行：</div>
+                                    <div>SHOW DATABASES;  # 查看数据库列表（应显示hive）</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div>USE hive;  # 切换到hive数据库</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div>SHOW TABLES;  # 查看元数据表</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 查看关键元数据表：</div>
+                                    <div>SELECT * FROM DBS;  # 查看数据库信息</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div>SELECT * FROM TBLS;  # 查看表信息（初始化后暂时为空）</div>
+                                </div>
+                                <p className="text-gray-600 text-sm">说明：DBS 存储数据库元数据，TBLS 存储表元数据，创建表后会有记录</p>
+                            </div>
+
+                            {/* 4.18 启动Hive */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.18 启动 Hive CLI</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>hive  # 启动Hive命令行客户端</div>
                                 </div>
                             </div>
 
-                            {/* 4.16 验证Hive */}
+                            {/* 4.19 验证Hive */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.16 验证 Hive 安装成功</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.19 验证 Hive 安装成功</h3>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
                                     <div>show databases;  # 查看数据库列表</div>
                                 </div>
                                 <div className="bg-yellow-50 p-2 rounded text-sm text-yellow-700">
                                     应显示：default 数据库
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* 第五章：Hive数据仓库操作 */}
+                    <section className="bg-white rounded-lg shadow-sm p-6">
+                        <h2 className="text-xl font-bold text-teal-700 mb-4 border-b pb-2">
+                            第五章：Hive 数据仓库操作（鲜生活超市）
+                        </h2>
+
+                        <div className="bg-yellow-50 p-4 rounded border border-yellow-200 mb-4">
+                            <p className="text-yellow-700 font-semibold">前置条件</p>
+                            <p className="text-sm">Hive 已安装并能启动 CLI，MySQL 元数据服务正常运行</p>
+                        </div>
+
+                        <div className="space-y-4">
+                            {/* 5.1 Windows上传数据文件 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.1 从 Windows 上传数据文件</h3>
+                                <div className="bg-blue-50 p-3 rounded mb-2 text-sm">
+                                    <p className="text-blue-700">操作步骤（MobaXterm）：</p>
+                                    <ol className="list-decimal list-inside text-gray-600 space-y-1 mt-2">
+                                        <li>在左侧导航到 <code className="bg-gray-200 px-1 rounded">/opt/data</code> 目录（如不存在则创建）</li>
+                                        <li>拖拽 <code className="bg-gray-200 px-1 rounded">products.csv</code>（50条产品数据）到该目录</li>
+                                        <li>拖拽 <code className="bg-gray-200 px-1 rounded">users.csv</code>（100条用户数据）到该目录</li>
+                                        <li>拖拽 <code className="bg-gray-200 px-1 rounded">orders.csv</code>（500条订单数据）到该目录</li>
+                                    </ol>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 如果 /opt/data 目录不存在，先创建：</div>
+                                    <div>mkdir -p /opt/data  # 创建数据目录</div>
+                                </div>
+                            </div>
+
+                            {/* 5.2 创建数据库 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.2 创建 supermarket 数据库</h3>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>hive  # 启动 Hive CLI</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
+                                    <div>CREATE DATABASE IF NOT EXISTS supermarket COMMENT '零售超市数据仓库';</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div>USE supermarket;  # 切换到 supermarket 数据库</div>
+                                </div>
+                                <p className="text-gray-600 text-sm">作用：创建鲜生活超市数据仓库</p>
+                            </div>
+
+                            {/* 5.3 创建products表 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.3 创建 products 产品信息表</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
+                                    <div>CREATE TABLE products (</div>
+                                    <div>    product_id INT COMMENT '产品ID',</div>
+                                    <div>    product_name STRING COMMENT '产品名称',</div>
+                                    <div>    category STRING COMMENT '产品类别',</div>
+                                    <div>    price DOUBLE COMMENT '产品价格（元）',</div>
+                                    <div>    stock INT COMMENT '库存数量'</div>
+                                    <div>) COMMENT '产品信息表'</div>
+                                    <div>ROW FORMAT DELIMITED FIELDS TERMINATED BY ','</div>
+                                    <div>STORED AS TEXTFILE</div>
+                                    <div>TBLPROPERTIES ('skip.header.line.count'='1');  # 跳过CSV首行</div>
+                                </div>
+                                <p className="text-gray-600 text-sm">作用：创建产品表，逗号分隔，跳过CSV表头</p>
+                            </div>
+
+                            {/* 5.4 创建users表 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.4 创建 users 用户信息表</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
+                                    <div>CREATE TABLE users (</div>
+                                    <div>    user_id INT COMMENT '用户ID',</div>
+                                    <div>    user_name STRING COMMENT '用户姓名',</div>
+                                    <div>    gender STRING COMMENT '性别',</div>
+                                    <div>    age INT COMMENT '年龄',</div>
+                                    <div>    city STRING COMMENT '所在城市'</div>
+                                    <div>) COMMENT '用户信息表'</div>
+                                    <div>ROW FORMAT DELIMITED FIELDS TERMINATED BY ','</div>
+                                    <div>STORED AS TEXTFILE</div>
+                                    <div>TBLPROPERTIES ('skip.header.line.count'='1');</div>
+                                </div>
+                            </div>
+
+                            {/* 5.5 创建orders表 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.5 创建 orders 订单信息表</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
+                                    <div>CREATE TABLE orders (</div>
+                                    <div>    order_id BIGINT COMMENT '订单ID',</div>
+                                    <div>    user_id INT COMMENT '用户ID',</div>
+                                    <div>    product_id INT COMMENT '产品ID',</div>
+                                    <div>    quantity INT COMMENT '购买数量',</div>
+                                    <div>    order_date STRING COMMENT '订单日期',</div>
+                                    <div>    store_id INT COMMENT '门店ID'</div>
+                                    <div>) COMMENT '订单信息表'</div>
+                                    <div>ROW FORMAT DELIMITED FIELDS TERMINATED BY ','</div>
+                                    <div>STORED AS TEXTFILE</div>
+                                    <div>TBLPROPERTIES ('skip.header.line.count'='1');</div>
+                                </div>
+                            </div>
+
+                            {/* 5.6 查看创建的表 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.6 查看已创建的表</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
+                                    <div>SHOW TABLES;  # 显示所有表</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div>DESCRIBE FORMATTED products;  # 查看 products 表详情</div>
+                                </div>
+                                <div className="bg-yellow-50 p-2 rounded text-sm text-yellow-700">
+                                    应显示：products、users、orders 三张表
+                                </div>
+                            </div>
+
+                            {/* 5.7 加载products数据 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.7 加载 products 数据到表</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
+                                    <div>LOAD DATA LOCAL INPATH '/opt/data/products.csv' OVERWRITE INTO TABLE products;</div>
+                                </div>
+                                <p className="text-gray-600 text-sm">作用：从本地文件系统加载CSV数据到Hive表</p>
+                            </div>
+
+                            {/* 5.8 加载users数据 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.8 加载 users 数据到表</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
+                                    <div>LOAD DATA LOCAL INPATH '/opt/data/users.csv' OVERWRITE INTO TABLE users;</div>
+                                </div>
+                            </div>
+
+                            {/* 5.9 加载orders数据 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.9 加载 orders 数据到表</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
+                                    <div>LOAD DATA LOCAL INPATH '/opt/data/orders.csv' OVERWRITE INTO TABLE orders;</div>
+                                </div>
+                            </div>
+
+                            {/* 5.10 验证数据 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.10 验证数据加载成功</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
+                                    <div>SELECT * FROM products LIMIT 10;  # 查看前10条产品</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div>SELECT COUNT(*) AS product_count FROM products;  # 统计产品数量</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div>SELECT COUNT(*) AS user_count FROM users;  # 统计用户数量</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div>SELECT COUNT(*) AS order_count FROM orders;  # 统计订单数量</div>
+                                </div>
+                                <div className="bg-green-50 p-2 rounded text-sm text-green-700">
+                                    验证结果：products=50条、users=100条、orders=500条
+                                </div>
+                            </div>
+
+                            {/* 5.11 退出Hive */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">5.11 退出 Hive CLI</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
+                                    <div>quit;  # 或 exit; 退出 Hive</div>
                                 </div>
                             </div>
                         </div>
@@ -1019,7 +1260,7 @@ export default async function ManualPage({ params }: PageProps) {
             {/* Footer */}
             <footer className="bg-white border-t mt-8 py-4">
                 <div className="max-w-4xl mx-auto px-4 text-center text-sm text-gray-500">
-                    大数据平台部署操作手册 · 更新日期：2026-04-20
+                    大数据平台应用实战 · 更新日期：2026-04-22
                 </div>
             </footer>
         </div>
