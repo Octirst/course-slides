@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import SidebarNav from "@/components/SidebarNav";
 
 interface PageProps {
     params: Promise<{ courseId: string }>;
@@ -16,28 +17,38 @@ export default async function ManualPage({ params }: PageProps) {
 
     return (
         <div className="min-h-screen bg-gray-50">
+            {/* Sidebar Navigation - fixed position on left */}
+            <SidebarNav />
+
             {/* Header */}
             <header className="bg-white shadow-sm sticky top-0 z-10">
-                <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-                    <Link
-                        href={`/courses/${courseId}`}
-                        className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
-                    >
-                        ← 返回课程
-                    </Link>
-                    <h1 className="text-lg font-semibold text-gray-800">大数据平台部署操作手册</h1>
+                <div className="px-4 py-4 flex justify-center items-center">
+                    <div className="max-w-4xl w-full flex justify-between items-center">
+                        <Link
+                            href={`/courses/${courseId}`}
+                            className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                        >
+                            ← 返回课程
+                        </Link>
+                        <h1 className="text-lg font-semibold text-gray-800">大数据平台部署操作手册</h1>
+                    </div>
                 </div>
             </header>
 
-            {/* Content */}
-            <main className="max-w-4xl mx-auto px-4 py-6">
-                <div className="space-y-8">
+            {/* Content - centered with sidebar offset on left */}
+            <main className="flex justify-center px-4 py-6">
+                {/* Left spacer for sidebar */}
+                <div className="w-60 shrink-0" />
 
-                    {/* 第一章：伪分布式搭建 */}
-                    <section className="bg-white rounded-lg shadow-sm p-6">
-                        <h2 className="text-xl font-bold text-blue-700 mb-4 border-b pb-2">
-                            第一章：伪分布式搭建（master 节点）
-                        </h2>
+                {/* Main Content - centered */}
+                <div className="max-w-4xl flex-1">
+                    <div className="space-y-8">
+
+                        {/* 第一章：伪分布式搭建 */}
+                        <section id="chapter1" className="bg-white rounded-lg shadow-sm p-6">
+                            <h2 className="text-xl font-bold text-blue-700 mb-4 border-b pb-2">
+                                第一章：伪分布式搭建（master 节点）
+                            </h2>
 
                         <div className="space-y-4">
                             {/* 1.1 Windows上传JDK */}
@@ -366,7 +377,7 @@ export default async function ManualPage({ params }: PageProps) {
                     </section>
 
                     {/* 第二章：完全分布式搭建 */}
-                    <section className="bg-white rounded-lg shadow-sm p-6">
+                    <section id="chapter2" className="bg-white rounded-lg shadow-sm p-6">
                         <h2 className="text-xl font-bold text-green-700 mb-4 border-b pb-2">
                             第二章：完全分布式搭建（三节点）
                         </h2>
@@ -667,7 +678,7 @@ export default async function ManualPage({ params }: PageProps) {
                     </section>
 
                     {/* 第三章：HDFS操作 */}
-                    <section className="bg-white rounded-lg shadow-sm p-6">
+                    <section id="chapter3" className="bg-white rounded-lg shadow-sm p-6">
                         <h2 className="text-xl font-bold text-orange-700 mb-4 border-b pb-2">
                             第三章：HDFS 文件操作
                         </h2>
@@ -753,7 +764,7 @@ export default async function ManualPage({ params }: PageProps) {
                     </section>
 
                     {/* 第四章：Hive部署 */}
-                    <section className="bg-white rounded-lg shadow-sm p-6">
+                    <section id="chapter4" className="bg-white rounded-lg shadow-sm p-6">
                         <h2 className="text-xl font-bold text-indigo-700 mb-4 border-b pb-2">
                             第四章：Hive 部署（远程模式）
                         </h2>
@@ -1048,7 +1059,7 @@ export default async function ManualPage({ params }: PageProps) {
                     </section>
 
                     {/* 第五章：Hive数据仓库操作 */}
-                    <section className="bg-white rounded-lg shadow-sm p-6">
+                    <section id="chapter5" className="bg-white rounded-lg shadow-sm p-6">
                         <h2 className="text-xl font-bold text-teal-700 mb-4 border-b pb-2">
                             第五章：Hive 数据仓库操作（鲜生活超市）
                         </h2>
@@ -1225,7 +1236,7 @@ export default async function ManualPage({ params }: PageProps) {
                     </section>
 
                     {/* 常见问题 */}
-                    <section className="bg-white rounded-lg shadow-sm p-6">
+                    <section id="faq" className="bg-white rounded-lg shadow-sm p-6">
                         <h2 className="text-xl font-bold text-red-700 mb-4 border-b pb-2">
                             常见问题排查
                         </h2>
@@ -1254,12 +1265,16 @@ export default async function ManualPage({ params }: PageProps) {
                     </section>
 
                 </div>
+                </div>
             </main>
 
             {/* Footer */}
             <footer className="bg-white border-t mt-8 py-4">
-                <div className="max-w-4xl mx-auto px-4 text-center text-sm text-gray-500">
-                    大数据平台应用实战 · 更新日期：2026-04-22
+                <div className="flex justify-center px-4">
+                    <div className="w-60 shrink-0" />
+                    <div className="max-w-4xl flex-1 text-center text-sm text-gray-500">
+                        大数据平台应用实战 · 更新日期：2026-04-22
+                    </div>
                 </div>
             </footer>
         </div>
