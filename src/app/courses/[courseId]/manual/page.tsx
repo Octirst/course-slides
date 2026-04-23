@@ -671,7 +671,7 @@ export default async function ManualPage({ params }: PageProps) {
                                 <div className="bg-blue-50 p-3 rounded text-sm">
                                     <p className="text-blue-700">在 Windows 浏览器访问：</p>
                                     <p className="text-gray-600 mt-2">HDFS WebUI：<code className="bg-gray-200 px-1 rounded">http://master的IP:9870</code></p>
-                                    <p className="text-gray-600">应显示 <strong>Live Nodes: 2</strong>（slave1、slave2）</p>
+                                    <p className="text-gray-600">应显示 <strong>Live Nodes: 3</strong>（slave1、slave2、master）</p>
                                 </div>
                             </div>
                         </div>
@@ -779,7 +779,7 @@ export default async function ManualPage({ params }: PageProps) {
                             <div className="bg-gray-50 p-4 rounded">
                                 <h3 className="font-semibold text-gray-700 mb-2">4.1 卸载 MariaDB（CentOS 7 默认安装）</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div>rpm -qa | grep mariadb  # 查看是否安装了MariaDB</div>
+                                    <div>rp mbm -qa | grep mariadb  # 查看是否安装了MariaDB</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
                                     <div>rpm -e --nodeps mariadb-libs  # 强制卸载MariaDB（忽略依赖）</div>
@@ -804,8 +804,11 @@ export default async function ManualPage({ params }: PageProps) {
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>cd /opt/software  # 进入安装包目录</div>
                                 </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>mkdir mysql  # 创建解压目录</div>
+                                </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
-                                    <div>tar -xf mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar  # 解压RPM包集合</div>
+                                    <div>tar -xvf mysql-5.7.28-1.el7.x86_64.rpm-bundle.tar -C ./mysql  # 解压到mysql目录</div>
                                 </div>
                             </div>
 
@@ -864,9 +867,35 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 4.8 创建hive数据库 */}
+                            {/* 4.8 配置root远程访问 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.8 创建 Hive 元数据库</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.8 配置 root 用户允许远程访问</h3>
+                                <div className="bg-red-50 p-3 rounded mb-2 text-sm text-red-700">
+                                    <p className="font-semibold">⚠️ 必须配置：Hive 需要通过 JDBC 远程连接 MySQL</p>
+                                    <p>默认 root 只允许 localhost 连接，无法从其他主机访问</p>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>mysql -u root -p000000  # 用root登录MySQL</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 MySQL 中执行：</div>
+                                    <div>USE mysql;  # 切换到mysql数据库</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div>UPDATE user SET host='%' WHERE user='root';  # 修改root允许远程访问</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div>FLUSH PRIVILEGES;  # 刷新权限使配置生效</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div>exit  # 退出MySQL</div>
+                                </div>
+                                <p className="text-gray-600 text-sm">说明：'%' 表示允许从任何主机连接</p>
+                            </div>
+
+                            {/* 4.9 创建hive数据库 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.9 创建 Hive 元数据库</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>mysql -u root -p000000  # 用root登录MySQL</div>
                                 </div>
@@ -880,9 +909,9 @@ export default async function ManualPage({ params }: PageProps) {
                                 <p className="text-gray-600 text-sm">说明：本课程直接使用 root 用户连接 MySQL，与教材保持一致</p>
                             </div>
 
-                            {/* 4.9 Windows上传Hive */}
+                            {/* 4.10 Windows上传Hive */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.9 从 Windows 上传 Hive 安装包和 JDBC 驱动</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.10 从 Windows 上传 Hive 安装包和 JDBC 驱动</h3>
                                 <div className="bg-blue-50 p-3 rounded text-sm">
                                     <ol className="list-decimal list-inside text-gray-600 space-y-1">
                                         <li>拖拽 <code className="bg-gray-200 px-1 rounded">apache-hive-3.1.2-bin.tar.gz</code> 到 /opt/software</li>
@@ -891,9 +920,9 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 4.10 解压Hive */}
+                            {/* 4.11 解压Hive */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.10 解压 Hive 安装包</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.11 解压 Hive 安装包</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>tar -zxvf apache-hive-3.1.2-bin.tar.gz -C /opt/module/  # 解压Hive</div>
                                 </div>
@@ -902,9 +931,9 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 4.11 配置Hive环境变量 */}
+                            {/* 4.12 配置Hive环境变量 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.11 在环境变量文件中追加 Hive 配置</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.12 在环境变量文件中追加 Hive 配置</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>vi /etc/profile.d/my_env.sh  # 打开环境变量文件</div>
                                 </div>
@@ -919,18 +948,18 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 4.12 上传JDBC驱动 */}
+                            {/* 4.13 上传JDBC驱动 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.12 上传 MySQL JDBC 驱动到 Hive lib 目录</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.13 上传 MySQL JDBC 驱动到 Hive lib 目录</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>cp /opt/software/mysql-connector-java-5.1.32.jar $HIVE_HOME/lib/  # 复制驱动</div>
                                 </div>
                                 <p className="text-gray-600 text-sm">作用：让 Hive 能连接 MySQL 元数据库</p>
                             </div>
 
-                            {/* 4.13 配置hive-site.xml */}
+                            {/* 4.14 配置hive-site.xml */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.13 配置 hive-site.xml</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.14 配置 hive-site.xml</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>vi $HIVE_HOME/conf/hive-site.xml  # 创建配置文件</div>
                                 </div>
@@ -959,9 +988,9 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 4.14 解决guava版本冲突 */}
+                            {/* 4.15 解决guava版本冲突 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.14 解决 Guava 版本冲突 ⚠️</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.15 解决 Guava 版本冲突 ⚠️</h3>
                                 <div className="bg-red-50 p-3 rounded mb-2 text-sm text-red-700">
                                     <p className="font-semibold">问题说明：</p>
                                     <p>Hadoop 3.x 使用 guava-27.0-jre.jar，Hive 3.1.2 使用 guava-19.0.jar</p>
@@ -984,9 +1013,9 @@ export default async function ManualPage({ params }: PageProps) {
                                 <p className="text-gray-600 text-sm">作用：让 Hive 使用与 Hadoop 相同版本的 Guava 库</p>
                             </div>
 
-                            {/* 4.15 启动Hadoop */}
+                            {/* 4.16 启动Hadoop */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.15 启动 Hadoop 集群 ⚠️</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.16 启动 Hadoop 集群 ⚠️</h3>
                                 <div className="bg-yellow-50 p-2 rounded text-sm text-yellow-700 mb-2">
                                     初始化 Hive 元数据前，必须先启动 Hadoop！
                                 </div>
@@ -998,9 +1027,9 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            {/* 4.16 初始化元数据 */}
+                            {/* 4.17 初始化元数据 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.16 初始化 Hive 元数据库</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.17 初始化 Hive 元数据库</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>schematool -dbType mysql -initSchema -verbose  # 初始化元数据到MySQL</div>
                                 </div>
@@ -1010,9 +1039,9 @@ export default async function ManualPage({ params }: PageProps) {
                                 <p className="text-gray-600 text-sm">作用：将 Hive 表结构信息写入 MySQL hive 数据库</p>
                             </div>
 
-                            {/* 4.17 查看元数据库 */}
+                            {/* 4.18 查看元数据库 */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.17 查看 MySQL 元数据库</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.18 查看 MySQL 元数据库</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>mysql -u root -p000000  # 登录MySQL</div>
                                 </div>
@@ -1036,17 +1065,17 @@ export default async function ManualPage({ params }: PageProps) {
                                 <p className="text-gray-600 text-sm">说明：DBS 存储数据库元数据，TBLS 存储表元数据，创建表后会有记录</p>
                             </div>
 
-                            {/* 4.18 启动Hive */}
+                            {/* 4.19 启动Hive */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.18 启动 Hive CLI</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.19 启动 Hive CLI</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>hive  # 启动Hive命令行客户端</div>
                                 </div>
                             </div>
 
-                            {/* 4.19 验证Hive */}
+                            {/* 4.20 验证Hive */}
                             <div className="bg-gray-50 p-4 rounded">
-                                <h3 className="font-semibold text-gray-700 mb-2">4.19 验证 Hive 安装成功</h3>
+                                <h3 className="font-semibold text-gray-700 mb-2">4.20 验证 Hive 安装成功</h3>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 在 Hive CLI 中执行：</div>
                                     <div>show databases;  # 查看数据库列表</div>
