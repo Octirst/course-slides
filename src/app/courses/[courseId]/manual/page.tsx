@@ -638,8 +638,8 @@ export default async function ManualPage({ params }: PageProps) {
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                 
                                 <div className="text-yellow-400"># 也可以用下面两个命令代替</div>
-                                    <div>start-yarn.sh  # 启动YARN服务（ResourceManager、NodeManager）</div>
-                                    <div>start-all.sh  # 启动HDFS和YARN（会自动启动slave节点）</div>
+                                    <div>start-dfs.sh  # 启动HDFS服务</div>
+                                    <div>start-yarn.sh  # 启动YARN服务（会自动启动slave节点）</div>
                                 </div>
                             </div>
 
