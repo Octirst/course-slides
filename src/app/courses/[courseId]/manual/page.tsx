@@ -901,7 +901,7 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 在 MySQL 中执行：</div>
-                                    <div>CREATE DATABASE hive CHARACTER SET utf8;  # 创建hive数据库</div>
+                                    <div>CREATE DATABASE metastore CHARACTER SET utf8;  # 创建metastore数据库</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
                                     <div>exit  # 退出MySQL</div>
@@ -967,10 +967,12 @@ export default async function ManualPage({ params }: PageProps) {
                                     <div className="text-yellow-400"># 写入以下内容（使用 root 用户连接 MySQL）：</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div>
+                                    <div>&lt;?xml-stylesheet type="text/xsl" href="configuration.xsl"?&gt;</div>
                                     <div>&lt;configuration&gt;</div>
                                     <div>  &lt;property&gt;</div>
                                     <div>    &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</div>
-                                    <div>    &lt;value&gt;jdbc:mysql://master:3306/hive?useSSL=false&lt;/value&gt;</div>
+                                    <div>    &lt;value&gt;jdbc:mysql://master:3306/metastore?useSSL=false&lt;/value&gt;</div>
                                     <div>  &lt;/property&gt;</div>
                                     <div>  &lt;property&gt;</div>
                                     <div>    &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</div>
@@ -983,6 +985,10 @@ export default async function ManualPage({ params }: PageProps) {
                                     <div>  &lt;property&gt;</div>
                                     <div>    &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</div>
                                     <div>    &lt;value&gt;000000&lt;/value&gt;</div>
+                                    <div>  &lt;/property&gt;</div>
+                                    <div>  &lt;property&gt;</div>
+                                    <div>    &lt;name&gt;hive.metastore.warehouse.dir&lt;/name&gt;</div>
+                                    <div>    &lt;value&gt;/user/hive/warehouse&lt;/value&gt;</div>
                                     <div>  &lt;/property&gt;</div>
                                     <div>&lt;/configuration&gt;</div>
                                 </div>
@@ -1083,6 +1089,205 @@ export default async function ManualPage({ params }: PageProps) {
                                 <div className="bg-yellow-50 p-2 rounded text-sm text-yellow-700">
                                     应显示：default 数据库
                                 </div>
+                            </div>
+
+                            {/* Hive服务部署分隔 */}
+                            <div className="bg-red-50 p-4 rounded border border-red-200 mt-6">
+                                <p className="text-red-700 font-semibold text-lg">⚠️ 重要：部署 HiveServer2 和 MetaStore 服务</p>
+                                <p className="text-sm text-gray-600">以下配置用于支持 JDBC 远程连接和多客户端并发访问</p>
+                            </div>
+
+                            {/* 4.21 HiveServer2与MetaStore介绍 */}
+                            <div className="bg-gray-50 p-4 rounded mt-4">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.21 HiveServer2 与 MetaStore 服务介绍</h3>
+                                <div className="grid grid-cols-2 gap-4 mt-2">
+                                    <div className="bg-blue-50 p-4 rounded-xl">
+                                        <div className="font-bold text-blue-700 mb-2">HiveServer2</div>
+                                        <div className="text-sm space-y-1">
+                                            <div>• 提供 JDBC/ODBC 接口</div>
+                                            <div>• 支持多客户端并发连接</div>
+                                            <div>• 默认端口：10000</div>
+                                            <div>• 类似 MySQL 服务端</div>
+                                        </div>
+                                    </div>
+                                    <div className="bg-green-50 p-4 rounded-xl">
+                                        <div className="font-bold text-green-700 mb-2">MetaStore</div>
+                                        <div className="text-sm space-y-1">
+                                            <div>• 管理元数据服务</div>
+                                            <div>• 连接 MySQL 元数据库</div>
+                                            <div>• 默认端口：9083</div>
+                                            <div>• 为 HiveServer2 提供元数据</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 4.22 hive-site.xml追加服务配置 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.22 在 hive-site.xml 中追加服务配置</h3>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>vi $HIVE_HOME/conf/hive-site.xml  # 打开配置文件</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 &lt;/configuration&gt; 标签之前追加以下内容：</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div>&lt;property&gt;</div>
+                                    <div>  &lt;name&gt;hive.server2.thrift.port&lt;/name&gt;</div>
+                                    <div>  &lt;value&gt;10000&lt;/value&gt;</div>
+                                    <div>&lt;/property&gt;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div>&lt;property&gt;</div>
+                                    <div>  &lt;name&gt;hive.server2.thrift.bind.host&lt;/name&gt;</div>
+                                    <div>  &lt;value&gt;master&lt;/value&gt;</div>
+                                    <div>&lt;/property&gt;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div>&lt;property&gt;</div>
+                                    <div>  &lt;name&gt;hive.metastore.uris&lt;/name&gt;</div>
+                                    <div>  &lt;value&gt;thrift://master:9083&lt;/value&gt;</div>
+                                    <div>&lt;/property&gt;</div>
+                                </div>
+                            </div>
+
+                            {/* 4.23 core-site.xml代理用户配置 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.23 在 Hadoop core-site.xml 中添加代理用户配置</h3>
+                                <div className="bg-red-50 p-3 rounded mb-2 text-sm text-red-700">
+                                    <p className="font-semibold">⚠️ 必须配置：不配置此项，HiveServer2 启动后无法被远程连接！</p>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>vi $HADOOP_HOME/etc/hadoop/core-site.xml  # 打开Hadoop配置文件</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 在 &lt;configuration&gt; 标签内追加以下内容：</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div>&lt;property&gt;</div>
+                                    <div>  &lt;name&gt;hadoop.proxyuser.root.hosts&lt;/name&gt;</div>
+                                    <div>  &lt;value&gt;*&lt;/value&gt;</div>
+                                    <div>&lt;/property&gt;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div>&lt;property&gt;</div>
+                                    <div>  &lt;name&gt;hadoop.proxyuser.root.groups&lt;/name&gt;</div>
+                                    <div>  &lt;value&gt;*&lt;/value&gt;</div>
+                                    <div>&lt;/property&gt;</div>
+                                </div>
+                                <p className="text-gray-600 text-sm">说明：允许 root 用户代理任意主机和组的请求</p>
+                            </div>
+
+                            {/* 4.24 分发配置到slave节点 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.24 分发 core-site.xml 到 slave 节点</h3>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>scp $HADOOP_HOME/etc/hadoop/core-site.xml slave1:$HADOOP_HOME/etc/hadoop/</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
+                                    <div>scp $HADOOP_HOME/etc/hadoop/core-site.xml slave2:$HADOOP_HOME/etc/hadoop/</div>
+                                </div>
+                                <p className="text-gray-600 text-sm">说明：修改 Hadoop 配置后，需要分发到所有节点才能生效</p>
+                            </div>
+
+                            {/* 4.25 重启Hadoop集群 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.25 重启 Hadoop 集群使配置生效</h3>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>stop-all.sh  # 停止HDFS和YARN</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>start-all.sh  # 重新启动HDFS和YARN</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
+                                    <div>jps  # 验证进程正常</div>
+                                </div>
+                            </div>
+
+                            {/* 4.26 启动Hive服务 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.26 启动 MetaStore 和 HiveServer2 服务</h3>
+                                <div className="bg-yellow-50 p-3 rounded mb-2 text-sm text-yellow-700">
+                                    启动顺序：先启动 MetaStore，再启动 HiveServer2
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>nohup hive --service metastore &gt; /tmp/metastore.log 2&gt;&amp;1 &amp;  # 启动MetaStore</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>sleep 3  # 等待MetaStore启动</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
+                                    <div>nohup hiveserver2 &gt; /tmp/hiveserver2.log 2&gt;&amp;1 &amp;  # 启动HiveServer2</div>
+                                </div>
+                                <p className="text-gray-600 text-sm">说明：nohup 让服务后台运行，终端关闭后进程不退出</p>
+                            </div>
+
+                            {/* 4.27 验证服务状态 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.27 验证 Hive 服务启动成功</h3>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 查看进程：</div>
+                                    <div>ps -ef | grep metastore | grep -v grep  # 查看MetaStore进程</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>ps -ef | grep HiveServer2 | grep -v grep  # 查看HiveServer2进程</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 查看端口：</div>
+                                    <div>netstat -nltp | grep 9083  # MetaStore端口</div>
+                                    <div>netstat -nltp | grep 10000  # HiveServer2端口</div>
+                                </div>
+                                <div className="bg-green-50 p-2 rounded text-sm text-green-700">
+                                    成功标志：两个进程都在运行，端口9083和10000都在监听
+                                </div>
+                            </div>
+
+                            {/* 4.28 停止Hive服务 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.28 停止 Hive 服务（可选）</h3>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 停止 HiveServer2：</div>
+                                    <div>ps -ef | grep HiveServer2 | grep -v grep | awk {'{'}print $2{'}'} | xargs kill -9</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 停止 MetaStore：</div>
+                                    <div>ps -ef | grep metastore | grep -v grep | awk {'{'}print $2{'}'} | xargs kill -9</div>
+                                </div>
+                                <div className="bg-yellow-50 p-2 rounded text-sm text-yellow-700">
+                                    注意：kill -9 强制终止，谨慎使用
+                                </div>
+                            </div>
+
+                            {/* 4.29 Hive服务管理脚本 */}
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">4.29 使用 hiveservices.sh 脚本管理服务（推荐）</h3>
+                                <div className="bg-blue-50 p-3 rounded mb-2 text-sm">
+                                    <p className="text-blue-700 font-semibold">脚本位置：05_hiveservices.sh</p>
+                                    <p className="text-gray-600">提供 start/stop/restart/status 四种操作</p>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 1. 添加执行权限：</div>
+                                    <div>chmod +x 05_hiveservices.sh</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 2. 查看端口对应进程：</div>
+                                    <div>netstat -nltp | grep 9083   # MetaStore端口</div>
+                                    <div>netstat -nltp | grep 10000  # HiveServer2端口</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 3. 关闭服务：</div>
+                                    <div>./05_hiveservices.sh stop</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 4. 启动服务：</div>
+                                    <div>./05_hiveservices.sh start</div>
+                                </div>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 其他操作：</div>
+                                    <div>./05_hiveservices.sh status   # 查看服务状态</div>
+                                    <div>./05_hiveservices.sh restart  # 重启服务</div>
+                                </div>
+                                <p className="text-gray-600 text-sm">说明：脚本会自动检查进程状态，避免重复启动</p>
                             </div>
                         </div>
                     </section>
