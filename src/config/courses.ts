@@ -54,7 +54,7 @@ export const courses: Course[] = [
             { id: "unit04-lesson06", title: "第6次课：JDBC 数据库操作（下）——增删改与安全", available: true },
             { id: "unit05-lesson07", title: "第7次课：Servlet 编程基础", available: true },
             { id: "unit05-lesson08", title: "第8次课：Servlet 进阶与会员注册", available: true },
-            { id: "unit06-lesson09", title: "第9次课：EL 表达式与 JSTL 标签", available: false },
+            { id: "unit06-lesson09", title: "第9次课：EL 表达式与 JSTL 标签", available: true },
             { id: "unit07-lesson10", title: "第10次课：Ajax 异步交互", available: false },
             { id: "unit08-lesson11", title: "第11次课：Spring 框架入门", available: false },
             { id: "unit09-lesson12", title: "第12次课：Spring MVC 入门", available: false },

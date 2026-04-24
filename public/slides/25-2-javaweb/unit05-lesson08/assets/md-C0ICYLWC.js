@@ -1,6 +1,0 @@
-import{o as l,b as n,w as c,g as t,ad as e,v as p,x as m,T as a}from"./modules/vue-D0wWPMMG.js";import{I as i}from"./slidev/default-PM5laLJo.js";import{u,f as d}from"./slidev/context-g1crO9OP.js";import"./index-CauYO2yn.js";import"./modules/shiki-DDSVZFq6.js";const b={__name:"slides.md__slidev_33",setup(x){const{$clicksContext:r,$frontmatter:o}=u();return r.setup(),(_,s)=>(l(),n(i,p(m(a(d)(a(o),32))),{default:c(()=>[...s[0]||(s[0]=[t("h1",null,"🎯 独立练习任务",-1),t("div",{class:"text-center mt-4"},[t("h2",{class:"text-xl mb-4"},"案例B：成绩录入流程")],-1),t("div",{class:"bg-yellow-500/20 p-6 rounded-lg mt-6"},[t("p",{class:"text-lg mb-4"},[e("⚠️ "),t("strong",null,"教师不演示"),e("，学生独立完成")]),t("p",{class:"text-sm"},"打开以下文件，根据TODO提示补全代码")],-1),t("div",{class:"bg-gray-800 text-gray-100 p-4 rounded-lg font-mono text-sm mt-4"},[t("pre",null,[e(`配套资源/第8次课_代码片段/
-├── `),t("span",{class:"text-blue-400"},"practice01_request.java"),e(`     ← 成绩Request TODO版
-├── `),t("span",{class:"text-green-400"},"practice04_register.jsp"),e(`     ← 成绩注册表单 TODO版
-├── `),t("span",{class:"text-orange-400"},"practice05_validate.java"),e(`    ← 成绩判断Servlet TODO版
-└── `),t("span",{class:"text-purple-400"},"practice06_welcome.jsp"),e(`      ← 成绩欢迎页面 TODO版
-`)])],-1)])]),_:1},16))}};export{b as default};
