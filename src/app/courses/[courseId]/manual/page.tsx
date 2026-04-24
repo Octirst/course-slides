@@ -1053,10 +1053,10 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 在 MySQL 中执行：</div>
-                                    <div>SHOW DATABASES;  # 查看数据库列表（应显示hive）</div>
+                                    <div>SHOW DATABASES;  # 查看数据库列表（应显示metastore）</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
-                                    <div>USE hive;  # 切换到hive数据库</div>
+                                    <div>USE metastore;  # 切换到metastore数据库</div>
                                 </div>
                                 <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
                                     <div>SHOW TABLES;  # 查看元数据表</div>
