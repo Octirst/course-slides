@@ -1262,12 +1262,12 @@ export default async function ManualPage({ params }: PageProps) {
                             <div className="bg-gray-50 p-4 rounded">
                                 <h3 className="font-semibold text-gray-700 mb-2">4.29 使用 hiveservices.sh 脚本管理服务（推荐）</h3>
                                 <div className="bg-blue-50 p-3 rounded mb-2 text-sm">
-                                    <p className="text-blue-700 font-semibold">脚本位置：05_hiveservices.sh</p>
+                                    <p className="text-blue-700 font-semibold">脚本位置：/opt/module/hive-3.1.2/bin/hiveservices.sh</p>
                                     <p className="text-gray-600">提供 start/stop/restart/status 四种操作</p>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 1. 添加执行权限：</div>
-                                    <div>chmod +x 05_hiveservices.sh</div>
+                                    <div>chmod +x /opt/module/hive-3.1.2/bin/hiveservices.sh</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 2. 查看端口对应进程：</div>
@@ -1276,16 +1276,16 @@ export default async function ManualPage({ params }: PageProps) {
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 3. 关闭服务：</div>
-                                    <div>./05_hiveservices.sh stop</div>
+                                    <div>$HIVE_HOME/bin/hiveservices.sh stop</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div className="text-yellow-400"># 4. 启动服务：</div>
-                                    <div>./05_hiveservices.sh start</div>
+                                    <div>$HIVE_HOME/bin/hiveservices.sh start</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
                                     <div className="text-yellow-400"># 其他操作：</div>
-                                    <div>./05_hiveservices.sh status   # 查看服务状态</div>
-                                    <div>./05_hiveservices.sh restart  # 重启服务</div>
+                                    <div>$HIVE_HOME/bin/hiveservices.sh status   # 查看服务状态</div>
+                                    <div>$HIVE_HOME/bin/hiveservices.sh restart  # 重启服务</div>
                                 </div>
                                 <p className="text-gray-600 text-sm">说明：脚本会自动检查进程状态，避免重复启动</p>
                             </div>
