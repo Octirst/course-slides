@@ -779,7 +779,7 @@ export default async function ManualPage({ params }: PageProps) {
                             <div className="bg-gray-50 p-4 rounded">
                                 <h3 className="font-semibold text-gray-700 mb-2">4.1 卸载 MariaDB（CentOS 7 默认安装）</h3>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
-                                    <div>rp mbm -qa | grep mariadb  # 查看是否安装了MariaDB</div>
+                                    <div>rpm -qa | grep mariadb  # 查看是否安装了MariaDB</div>
                                 </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm">
                                     <div>rpm -e --nodeps mariadb-libs  # 强制卸载MariaDB（忽略依赖）</div>
@@ -815,6 +815,9 @@ export default async function ManualPage({ params }: PageProps) {
                             {/* 4.4 安装MySQL */}
                             <div className="bg-gray-50 p-4 rounded">
                                 <h3 className="font-semibold text-gray-700 mb-2">4.4 按顺序安装 MySQL RPM 包</h3>
+                                <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
+                                    <div>cd /opt/software/mysql  # 进入安装包目录</div>
+                                </div>
                                 <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-sm mb-2">
                                     <div>rpm -ivh mysql-community-common-5.7.28-1.el7.x86_64.rpm  # 安装common包</div>
                                 </div>
