@@ -1,0 +1,4 @@
+import{L as e,T as t,X as n,_ as r,_t as i,b as a,g as o,ht as s}from"./modules/shiki-BYY7Vn19.js";import{n as c,t as l}from"./slidev/context-BQHBxFbi.js";import{t as u}from"./slidev/default-BjP62Xnz.js";var d={__name:`slides.md__slidev_36`,setup(d){let{$slidev:f,$nav:p,$clicksContext:m,$clicks:h,$page:g,$renderContext:_,$frontmatter:v}=c();return m.setup(),(c,d)=>(e(),r(u,i(t(s(l)(s(v),35))),{default:n(()=>[...d[0]||=[o(`h1`,null,`🎯 案例：成绩列表独立练习`,-1),o(`div`,{class:`text-center mt-4`},[o(`h2`,{class:`text-xl mb-8`},`案例B：成绩列表（独立完成）`)],-1),o(`div`,{class:`bg-yellow-500/20 p-6 rounded-lg mt-6`},[o(`p`,{class:`text-lg mb-4`},[a(`⚠️ `),o(`strong`,null,`教师不演示`),a(`，学生独立完成`)]),o(`p`,{class:`text-sm`},`打开以下文件，根据TODO提示补全代码`)],-1),o(`div`,{class:`bg-gray-800 text-gray-100 p-4 rounded-lg font-mono text-sm mt-4`},[o(`pre`,null,`配套资源/第9次课_代码片段/
+├── practice01_score_data.java  ← Servlet准备数据
+└── practice02_score_list.jsp   ← JSP显示成绩列表
+`)],-1)]]),_:1},16))}};export{d as default};

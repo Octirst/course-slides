@@ -1,0 +1,7 @@
+import{H as e,L as t,T as n,X as r,Z as i,_ as a,_t as o,b as s,g as c,ht as l,y as u}from"./modules/shiki-BYY7Vn19.js";import{n as d,t as f}from"./slidev/context-BQHBxFbi.js";import{t as p}from"./slidev/default-BjP62Xnz.js";var m={class:`mt-3 p-4 bg-green-500/20 rounded-lg`},h={__name:`slides.md__slidev_13`,setup(h){let{$slidev:g,$nav:_,$clicksContext:v,$clicks:y,$page:b,$renderContext:x,$frontmatter:S}=d();return v.setup(),(d,h)=>{let g=e(`click`);return t(),a(p,o(n(l(f)(l(S),12))),{default:r(()=>[h[1]||=c(`h1`,null,`📊 EL隐含对象`,-1),h[2]||=c(`div`,{class:`bg-gray-800 text-gray-100 p-4 rounded-lg font-mono text-lg mt-4`},[c(`pre`,null,`| 隐式对象 | 作用 | 示例 |
+|----------|------|------|
+| requestScope | request域属性 | \${requestScope.username} |
+| sessionScope | session域属性 | \${sessionScope.user} |
+| applicationScope | application域属性 | \${applicationScope.config} |
+| param | 请求参数 | \${param.username} |
+`)],-1),i((t(),u(`div`,m,[...h[0]||=[c(`h3`,null,`作用域自动搜索`,-1),c(`div`,{class:`bg-gray-800 p-2 rounded font-mono text-xs mt-2`},[c(`p`,{class:`text-white`},"${username} → 自动搜索（从小到大）"),c(`p`,{class:`text-white`},` page → request → session → application`)],-1),c(`p`,{class:`text-sm mt-2`},[s(`指定作用域：`),c(`code`,null,"${requestScope.username}"),s(` 只查request域`)],-1)]])),[[g]])]),_:1},16)}}};export{h as default};
