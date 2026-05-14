@@ -28,7 +28,7 @@ export const courses: Course[] = [
             { id: "unit03-lesson05", title: "第5次课：HDFS深入操作与MapReduce案例体验", available: true },
             { id: "unit04-lesson06", title: "第6次课：Hive安装与零售数仓初建", available: true },
             { id: "unit04-lesson07", title: "第7次课：HiveSQL单表查询与分析", available: true },
-            { id: "unit04-lesson08", title: "第8次课：多表关联与运维操作", available: false },
+            { id: "unit04-lesson08", title: "第8次课：多表关联与运维操作", available: true },
             { id: "unit05-lesson09", title: "第9次课：Flume架构与基础采集配置", available: false },
             { id: "unit05-lesson10", title: "第10次课：Flume采集至HDFS与多门店汇聚", available: false },
             { id: "unit06-lesson11", title: "第11次课：HBase安装与NoSQL快速查询", available: false },
