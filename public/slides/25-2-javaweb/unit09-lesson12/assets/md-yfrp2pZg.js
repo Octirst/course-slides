@@ -1,0 +1,13 @@
+import{H as e,L as t,T as n,X as r,Z as i,_ as a,_t as o,b as s,g as c,ht as l,x as u,y as d}from"./modules/shiki-DjDEXEIT.js";import{nt as f,rt as p}from"./index-BmmQDeeL.js";import{t as m}from"./slidev/CodeBlockWrapper-Cq5Odry2.js";import{t as h}from"./slidev/default-DEPQGVjM.js";var g={class:`mt-4 p-3 bg-yellow-500/20 rounded-lg`},_={__name:`slides.md__slidev_10`,setup(_){let{$slidev:v,$nav:y,$clicksContext:b,$clicks:x,$page:S,$renderContext:C,$frontmatter:w}=p();return b.setup(),(p,_)=>{let v=m,y=e(`click`);return t(),a(h,o(n(l(f)(l(w),9))),{default:r(()=>[_[2]||=c(`h1`,null,`🔧 环境搭建：web.xml`,-1),u(v,{title:``,ranges:[]},{default:r(()=>[..._[0]||=[c(`pre`,{class:`shiki shiki-themes vitesse-dark vitesse-light slidev-code`,style:{"--shiki-dark":`#dbd7caee`,"--shiki-light":`#393a34`,"--shiki-dark-bg":`#121212`,"--shiki-light-bg":`#ffffff`}},[c(`code`,{class:`language-text`},[c(`span`,{class:`line`},[c(`span`,null,`&lt;servlet&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;init-param&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`        &lt;param-value&gt;/WEB-INF/spring-mvc.xml&lt;/param-value&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;/init-param&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`&lt;/servlet&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`&lt;servlet-mapping&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;servlet-name&gt;dispatcher&lt;/servlet-name&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;url-pattern&gt;/&lt;/url-pattern&gt;  &lt;!-- 所有请求都经 DispatcherServlet --&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`&lt;/servlet-mapping&gt;`)])])],-1)]]),_:1}),i((t(),d(`div`,g,[..._[1]||=[c(`p`,null,[s(`⚠️ `),c(`strong`,null,`url-pattern="/"`),s(` 会拦截静态资源（图片/CSS/JS），当前无静态资源所以没问题`)],-1),c(`p`,{class:`text-sm text-green-400 mt-1`},`实际项目需配置 <mvc:resources/> 放行静态资源`,-1)]])),[[y]])]),_:1},16)}}};export{_ as default};

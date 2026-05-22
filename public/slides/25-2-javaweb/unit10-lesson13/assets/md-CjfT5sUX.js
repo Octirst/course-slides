@@ -1,0 +1,15 @@
+import{H as e,L as t,T as n,X as r,Z as i,_ as a,_t as o,b as s,g as c,ht as l,x as u,y as d}from"./modules/shiki-DjDEXEIT.js";import{nt as f,rt as p}from"./index-Do2eVPGU.js";import{t as m}from"./slidev/CodeBlockWrapper-oONFnhkS.js";import{t as h}from"./slidev/default-DUe6y5NU.js";var g={class:`grid grid-cols-2 gap-6 mt-6`},_={class:`bg-red-500/20 p-4 rounded-lg`},v={class:`bg-green-500/20 p-4 rounded-lg`},y={class:`mt-4 p-3 bg-blue-500/20 rounded-lg`},b={__name:`slides.md__slidev_17`,setup(b){let{$slidev:x,$nav:S,$clicksContext:C,$clicks:w,$page:T,$renderContext:E,$frontmatter:D}=p();return C.setup(),(p,b)=>{let x=m,S=e(`click`);return t(),a(h,o(n(l(f)(l(D),16))),{default:r(()=>[b[7]||=c(`h1`,null,`📝 Spring 表单标签`,-1),c(`div`,g,[c(`div`,_,[b[1]||=c(`h3`,{class:`text-red-400 mb-2`},`❌ 传统 HTML 表单`,-1),u(x,{title:``,ranges:[]},{default:r(()=>[...b[0]||=[c(`pre`,{class:`shiki shiki-themes vitesse-dark vitesse-light slidev-code`,style:{"--shiki-dark":`#dbd7caee`,"--shiki-light":`#393a34`,"--shiki-dark-bg":`#121212`,"--shiki-light-bg":`#ffffff`}},[c(`code`,{class:`language-text`},[c(`span`,{class:`line`},[c(`span`,null,`&lt;form action="/save"`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`  method="post"&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;input type="text"`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`      name="name"/&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;input type="text"`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`      name="price"/&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`&lt;/form&gt;`)])])],-1)]]),_:1}),b[2]||=c(`pre`,null,[c(`code`,null,`<p class="text-sm mt-2">手动管理name属性</p>
+`)],-1)]),c(`div`,v,[b[4]||=c(`h3`,{class:`text-green-400 mb-2`},`✅ Spring 表单标签`,-1),u(x,{title:``,ranges:[]},{default:r(()=>[...b[3]||=[c(`pre`,{class:`shiki shiki-themes vitesse-dark vitesse-light slidev-code`,style:{"--shiki-dark":`#dbd7caee`,"--shiki-light":`#393a34`,"--shiki-dark-bg":`#121212`,"--shiki-light-bg":`#ffffff`}},[c(`code`,{class:`language-text`},[c(`span`,{class:`line`},[c(`span`,null,`&lt;form:form`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`  modelAttribute="product"`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`  method="post"`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`  action="/product/save"&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;form:input path="name"/&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`    &lt;form:input path="price"/&gt;`)]),s(`
+`),c(`span`,{class:`line`},[c(`span`,null,`&lt;/form:form&gt;`)])])],-1)]]),_:1}),b[5]||=c(`pre`,null,[c(`code`,null,`<p class="text-sm mt-2">modelAttribute绑定对象</p>
+`)],-1)])]),i((t(),d(`div`,y,[...b[6]||=[c(`p`,null,[s(`💡 `),c(`strong`,null,`modelAttribute 类比`),s(`：填表格前先发一张空白表——addForm方法创建一个空Product对象放入Model`)],-1)]])),[[S]])]),_:1},16)}}};export{b as default};
