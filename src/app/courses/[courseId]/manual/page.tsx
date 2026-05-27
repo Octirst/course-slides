@@ -1501,6 +1501,326 @@ export default async function ManualPage({ params }: PageProps) {
                         </div>
                     </section>
 
+                    {/* 第六章：Hive SQL 实操案例 */}
+                    <section id="chapter6" className="bg-white rounded-lg shadow-sm p-6">
+                        <h2 className="text-xl font-bold text-pink-700 mb-4 border-b pb-2">
+                            第六章：Hive SQL 实操案例
+                        </h2>
+
+                        <div className="bg-yellow-50 p-4 rounded border border-yellow-200 mb-4">
+                            <p className="text-yellow-700 font-semibold">使用说明</p>
+                            <p className="text-sm">本章收录了 Hive SQL 中最常用的查询模式，包含单表查询和多表关联。每个案例都有 SQL 代码和业务解释。</p>
+                        </div>
+
+                        <div className="space-y-6">
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.1 全表查看数据</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 先看表里有什么数据</div>
+                                    <div>SELECT * FROM products LIMIT 10;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.2 查询指定列</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># AS 别名，DISTINCT 去重</div>
+                                    <div>SELECT product_name AS 商品名称, price AS 价格 FROM products;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div>SELECT DISTINCT category FROM products;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.3 条件筛选（WHERE）</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 比较运算</div>
+                                    <div>SELECT product_name, price FROM products WHERE price &gt; 20;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># BETWEEN 范围（包含边界）</div>
+                                    <div>SELECT product_name, price FROM products WHERE price BETWEEN 10 AND 30;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># IN 多值匹配</div>
+                                    <div>SELECT product_name, category FROM products WHERE category IN ('饮料', '食品');</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># LIKE 模糊匹配</div>
+                                    <div>SELECT product_name, price FROM products WHERE product_name LIKE '%可乐%';</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.4 排序（ORDER BY + LIMIT）</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># DESC 降序</div>
+                                    <div>SELECT product_name, price FROM products ORDER BY price DESC;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># LIMIT 取前 N 条</div>
+                                    <div>SELECT product_name, price FROM products ORDER BY price DESC LIMIT 10;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.5 聚合函数</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># COUNT / AVG / MAX / MIN / SUM</div>
+                                    <div>SELECT COUNT(*) AS 产品总数 FROM products;</div>
+                                    <div>SELECT AVG(price) AS 平均价格 FROM products;</div>
+                                    <div>SELECT MAX(price) AS 最高价格 FROM products;</div>
+                                    <div>SELECT MIN(price) AS 最低价格 FROM products;</div>
+                                    <div>SELECT SUM(stock) AS 库存总量 FROM products;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.6 分组统计（GROUP BY + HAVING）</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># GROUP BY 按类别统计</div>
+                                    <div>SELECT category, COUNT(*) AS 商品数,</div>
+                                    <div>       ROUND(AVG(price), 2) AS 均价, SUM(stock) AS 总库存</div>
+                                    <div>FROM products GROUP BY category;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># HAVING 分组后筛选</div>
+                                    <div>SELECT category, AVG(price) AS avg_price FROM products GROUP BY category HAVING AVG(price) &gt; 20;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.7 INNER JOIN 多表关联</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 三表关联：订单+用户+产品</div>
+                                    <div>SELECT o.order_id, u.user_name, p.product_name,</div>
+                                    <div>       o.quantity, p.price * o.quantity AS 金额</div>
+                                    <div>FROM orders o</div>
+                                    <div>JOIN users u ON o.user_id = u.user_id</div>
+                                    <div>JOIN products p ON o.product_id = p.product_id</div>
+                                    <div>LIMIT 20;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 各店铺销售统计</div>
+                                    <div>SELECT o.store_id, COUNT(DISTINCT o.order_id) AS 订单数,</div>
+                                    <div>       ROUND(SUM(o.quantity * p.price), 2) AS 营业额</div>
+                                    <div>FROM orders o JOIN products p ON o.product_id = p.product_id</div>
+                                    <div>GROUP BY o.store_id ORDER BY 营业额 DESC;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.8 LEFT JOIN 保留全部</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 查所有用户消费金额（含未消费）</div>
+                                    <div>SELECT u.user_id, u.user_name,</div>
+                                    <div>       COALESCE(ROUND(SUM(o.quantity * p.price), 2), 0) AS 总消费</div>
+                                    <div>FROM users u</div>
+                                    <div>LEFT JOIN orders o ON u.user_id = o.user_id</div>
+                                    <div>LEFT JOIN products p ON o.product_id = p.product_id</div>
+                                    <div>GROUP BY u.user_id, u.user_name ORDER BY 总消费 DESC;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># LEFT JOIN + IS NULL：查未消费用户</div>
+                                    <div>SELECT u.user_id, u.user_name, u.city</div>
+                                    <div>FROM users u LEFT JOIN orders o ON u.user_id = o.user_id</div>
+                                    <div>WHERE o.order_id IS NULL;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.9 子查询</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 标量子查询：先算平均值再比较</div>
+                                    <div>SELECT product_name, price FROM products WHERE price &gt; (SELECT AVG(price) FROM products);</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># HAVING + 子查询</div>
+                                    <div>SELECT s.name, AVG(sc.score) AS avg_score</div>
+                                    <div>FROM students s JOIN scores sc ON s.student_id = sc.student_id</div>
+                                    <div>GROUP BY s.name</div>
+                                    <div>HAVING AVG(sc.score) &gt; (SELECT AVG(score) FROM scores);</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.10 WITH 子句（CTE）</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># WITH 给子查询起名，主查询直接引用</div>
+                                    <div>WITH customer_spending AS (</div>
+                                    <div>    SELECT u.user_name,</div>
+                                    <div>           ROUND(SUM(o.quantity * p.price), 2) AS total_spent</div>
+                                    <div>    FROM users u</div>
+                                    <div>    JOIN orders o ON u.user_id = o.user_id</div>
+                                    <div>    JOIN products p ON o.product_id = p.product_id</div>
+                                    <div>    GROUP BY u.user_name</div>
+                                    <div>)</div>
+                                    <div>SELECT * FROM customer_spending ORDER BY total_spent DESC LIMIT 5;</div>
+                                </div>
+                            </div>
+
+                            {/* ======================================== */}
+                            {/* 6.11-6.20 学生成绩场景（student_score 库） */}
+                            {/* ======================================== */}
+                            <div className="bg-red-50 p-4 rounded border border-red-200 mt-6">
+                                <p className="text-red-700 font-semibold text-lg">📚 学生成绩场景</p>
+                                <p className="text-sm text-gray-600">以下案例使用 student_score 数据库，包含 students（学生）、courses（课程）、scores（成绩）三张表。实操前先 USE student_score。</p>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.11 表结构与数据预览</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 先看三张表的结构和数据量</div>
+                                    <div>SELECT * FROM students LIMIT 10;</div>
+                                    <div>SELECT * FROM courses;</div>
+                                    <div>SELECT * FROM scores LIMIT 10;</div>
+                                    <div>SELECT COUNT(*) AS 学生数 FROM students;</div>
+                                    <div>SELECT COUNT(*) AS 课程数 FROM courses;</div>
+                                    <div>SELECT COUNT(*) AS 成绩数 FROM scores;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.12 条件筛选（按性别、年龄、专业）</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 按性别筛选</div>
+                                    <div>SELECT name, age, major FROM students WHERE gender = \'女\';</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 按年龄范围筛选</div>
+                                    <div>SELECT name, age, major FROM students WHERE age &gt; 20;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 按专业筛选并排序</div>
+                                    <div>SELECT name, age FROM students WHERE major = \'计算机科学\' ORDER BY age DESC;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 模糊匹配：姓张的学生</div>
+                                    <div>SELECT * FROM students WHERE name LIKE \'张%\';</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.13 聚合统计（全班平均分、各科统计）</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 全班成绩统计</div>
+                                    <div>SELECT COUNT(*) AS 考试总人次,</div>
+                                    <div>       ROUND(AVG(score), 2) AS 全体平均分,</div>
+                                    <div>       MAX(score) AS 最高分,</div>
+                                    <div>       MIN(score) AS 最低分</div>
+                                    <div>FROM scores;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 按性别统计人数</div>
+                                    <div>SELECT gender, COUNT(*) AS 人数 FROM students GROUP BY gender;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.14 GROUP BY 分组统计</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 各专业学生人数（降序）</div>
+                                    <div>SELECT major, COUNT(*) AS 人数</div>
+                                    <div>FROM students GROUP BY major ORDER BY 人数 DESC;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 各门课程的平均分</div>
+                                    <div>SELECT c.course_name, ROUND(AVG(sc.score), 2) AS 平均分</div>
+                                    <div>FROM scores sc JOIN courses c ON sc.course_id = c.course_id</div>
+                                    <div>GROUP BY c.course_name ORDER BY 平均分 DESC;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 各专业男女学生人数对比（多维度分组）</div>
+                                    <div>SELECT major, gender, COUNT(*) AS 人数</div>
+                                    <div>FROM students GROUP BY major, gender ORDER BY major;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.15 三表关联（学生+成绩+课程）</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 查询每个学生的成绩详情</div>
+                                    <div>SELECT s.name, c.course_name, sc.score</div>
+                                    <div>FROM scores sc</div>
+                                    <div>JOIN students s ON sc.student_id = s.student_id</div>
+                                    <div>JOIN courses c ON sc.course_id = c.course_id</div>
+                                    <div>ORDER BY s.name, c.course_name;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 查询某个学生的所有课程成绩</div>
+                                    <div>SELECT c.course_name, sc.score</div>
+                                    <div>FROM scores sc</div>
+                                    <div>JOIN courses c ON sc.course_id = c.course_id</div>
+                                    <div>WHERE sc.student_id = (SELECT student_id FROM students WHERE name = \'张伟\');</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 查询某门课程（如数学）的所有学生成绩</div>
+                                    <div>SELECT s.name, sc.score</div>
+                                    <div>FROM scores sc</div>
+                                    <div>JOIN students s ON sc.student_id = s.student_id</div>
+                                    <div>WHERE sc.course_id = (SELECT course_id FROM courses WHERE course_name = \'数学\');</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.16 子查询与HAVING</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 查询平均分高于全体平均分的学生</div>
+                                    <div>SELECT s.name, ROUND(AVG(sc.score), 2) AS avg_score</div>
+                                    <div>FROM students s JOIN scores sc ON s.student_id = sc.student_id</div>
+                                    <div>GROUP BY s.name</div>
+                                    <div>HAVING AVG(sc.score) &gt; (SELECT AVG(score) FROM scores);</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 查询成绩大于90分的学生详情（三表关联+条件）</div>
+                                    <div>SELECT s.name, c.course_name, sc.score</div>
+                                    <div>FROM scores sc</div>
+                                    <div>JOIN students s ON sc.student_id = s.student_id</div>
+                                    <div>JOIN courses c ON sc.course_id = c.course_id</div>
+                                    <div>WHERE sc.score &gt; 90;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 查询选修超过3门课程的学生</div>
+                                    <div>SELECT s.name, COUNT(*) AS 选课数</div>
+                                    <div>FROM scores sc JOIN students s ON sc.student_id = s.student_id</div>
+                                    <div>GROUP BY s.name</div>
+                                    <div>HAVING COUNT(*) &gt; 3;</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-4 rounded">
+                                <h3 className="font-semibold text-gray-700 mb-2">6.17 WITH 子句简化查询</h3>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm mb-2">
+                                    <div className="text-yellow-400"># 用WITH计算学生平均分，筛选优秀学生</div>
+                                    <div>WITH student_avg AS (</div>
+                                    <div>    SELECT s.student_id, s.name,</div>
+                                    <div>           ROUND(AVG(sc.score), 2) AS avg_score</div>
+                                    <div>    FROM scores sc</div>
+                                    <div>    JOIN students s ON sc.student_id = s.student_id</div>
+                                    <div>    GROUP BY s.student_id, s.name</div>
+                                    <div>)</div>
+                                    <div>SELECT * FROM student_avg</div>
+                                    <div>WHERE avg_score &gt; 85</div>
+                                    <div>ORDER BY avg_score DESC;</div>
+                                </div>
+                                <div className="bg-gray-900 text-white p-3 rounded font-mono text-sm">
+                                    <div className="text-yellow-400"># 子查询在FROM中当临时表</div>
+                                    <div>SELECT t.major, t.avg_score</div>
+                                    <div>FROM (</div>
+                                    <div>    SELECT s.major, ROUND(AVG(sc.score), 2) AS avg_score</div>
+                                    <div>    FROM scores sc</div>
+                                    <div>    JOIN students s ON sc.student_id = s.student_id</div>
+                                    <div>    GROUP BY s.major</div>
+                                    <div>) t</div>
+                                    <div>WHERE t.avg_score &gt; 70;</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
                 </div>
                 </div>
             </main>
@@ -1510,7 +1830,7 @@ export default async function ManualPage({ params }: PageProps) {
                 <div className="flex justify-center px-4">
                     <div className="w-60 shrink-0" />
                     <div className="max-w-4xl flex-1 text-center text-sm text-gray-500">
-                        大数据平台应用实战 · 更新日期：2026-04-22
+                        大数据平台应用实战 · 更新日期：2026-05-27
                     </div>
                 </div>
             </footer>
