@@ -1,0 +1,9 @@
+import{$ as e,B as t,C as n,D as r,S as i,bt as a,v as o,vt as s,y as c}from"./modules/shiki-CrcqEQc-.js";import{nt as l,rt as u}from"./index-B8dcRTA2.js";import{t as d}from"./slidev/VClicks-dCLuv4Ri.js";import{t as f}from"./slidev/default-YyD5F-DF.js";import{t as p}from"./slidev/CodeBlockWrapper-xXC_T-Mw.js";var m={class:`grid grid-cols-2 gap-8`},h={__name:`slides.md__slidev_41`,setup(h){let{$slidev:g,$nav:_,$clicksContext:v,$clicks:y,$page:b,$renderContext:x,$frontmatter:S}=u();return v.setup(),(u,h)=>{let g=p,_=d;return t(),c(f,a(r(s(l)(s(S),40))),{default:e(()=>[h[4]||=o(`h1`,null,`🔬 实验 3：禁用 Windows VMnet8`,-1),o(`div`,m,[o(`div`,null,[h[1]||=o(`h3`,null,`操作步骤`,-1),n(g,{title:``,ranges:[]},{default:e(()=>[...h[0]||=[o(`pre`,{class:`shiki shiki-themes vitesse-dark vitesse-light slidev-code`,style:{"--shiki-dark":`#dbd7caee`,"--shiki-light":`#393a34`,"--shiki-dark-bg":`#121212`,"--shiki-light-bg":`#ffffff`}},[o(`code`,{class:`language-text`},[o(`span`,{class:`line`},[o(`span`,null,`# 1. Windows 控制面板 → 网络适配器`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`# 2. 右键 VMnet8 → 禁用`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`# 3. 在 CMD 中 ping 虚拟机 IP`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`#    → 观察失败现象`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`# 4. 右键 VMnet8 → 启用`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`# 5. 再次 ping / SSH，确认恢复`)])])],-1)]]),_:1})]),o(`div`,null,[h[3]||=o(`h3`,null,`📝 现象记录`,-1),n(_,null,{default:e(()=>[...h[2]||=[o(`ul`,null,[o(`li`,null,[o(`strong`,null,`失败表现`),i(`：ping 不通，请求超时`)]),o(`li`,null,[o(`strong`,null,`原因`),i(`：Windows 端网络通道被切断`)]),o(`li`,null,[o(`strong`,null,`检查方法`),i(`：查看网络适配器状态`)]),o(`li`,null,[o(`strong`,null,`学到了`),i(`：VMnet8 是宿主机与虚拟机通信的桥梁`)])],-1)]]),_:1})])])]),_:1},16)}}};export{h as default};

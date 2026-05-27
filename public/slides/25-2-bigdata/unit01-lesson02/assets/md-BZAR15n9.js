@@ -1,0 +1,12 @@
+import{$ as e,B as t,C as n,D as r,S as i,bt as a,v as o,vt as s,y as c}from"./modules/shiki-CrcqEQc-.js";import{nt as l,rt as u}from"./index-BPkpjrTM.js";import{t as d}from"./slidev/CodeBlockWrapper-VYDpm56K.js";import{t as f}from"./slidev/VClick-CLyV8yq7.js";import{t as p}from"./slidev/default-YyD5F-DF.js";var m={__name:`slides.md__slidev_23`,setup(m){let{$slidev:h,$nav:g,$clicksContext:_,$clicks:v,$page:y,$renderContext:b,$frontmatter:x}=u();return _.setup(),(u,m)=>{let h=d,g=f;return t(),c(p,a(r(s(l)(s(x),22))),{default:e(()=>[m[2]||=o(`h1`,null,`📊 模式对比图`,-1),n(h,{title:``,ranges:[]},{default:e(()=>[...m[0]||=[o(`pre`,{class:`shiki shiki-themes vitesse-dark vitesse-light slidev-code`,style:{"--shiki-dark":`#dbd7caee`,"--shiki-light":`#393a34`,"--shiki-dark-bg":`#121212`,"--shiki-light-bg":`#ffffff`}},[o(`code`,{class:`language-text`},[o(`span`,{class:`line`},[o(`span`,null,` ┌──────────────────────────────────────────────────────┐`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,` │              互联网 (Internet)                        │`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,` └────────────────────────┬─────────────────────────────┘`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`                          │`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`         ┌────────────────┼────────────────┐`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`         │                │                │`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`  ┌──────▼──────┐  ┌──────▼──────┐  ┌──────▼──────┐`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`  │  桥接模式    │  │  NAT模式    │  │ 仅主机模式   │`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`  │─────────── │  │─────────── │  │─────────── │`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`  │ 虚拟机有    │  │ 虚拟机通过  │  │ 虚拟机与    │`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`  │ 独立公网IP  │  │ 宿主机上网  │  │ 外网隔离    │`)]),i(`
+`),o(`span`,{class:`line`},[o(`span`,null,`  └─────────────┘  └─────────────┘  └─────────────┘`)])])],-1)]]),_:1}),n(g,null,{default:e(()=>[...m[1]||=[o(`div`,{class:`mt-4 p-4 bg-blue-500/10 rounded-lg`},[o(`blockquote`,null,[o(`p`,null,[i(`💡 `),o(`strong`,null,`为什么我们用 NAT？`),i(` 实验室网络有限，NAT 模式不占用真实 IP，方便统一管理`)])])],-1)]]),_:1})]),_:1},16)}}};export{m as default};

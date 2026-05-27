@@ -14,6 +14,7 @@ const navItems: NavItem[] = [
   { id: "chapter3", title: "第三章：HDFS文件操作", color: "orange" },
   { id: "chapter4", title: "第四章：Hive部署", color: "indigo" },
   { id: "chapter5", title: "第五章：Hive数据仓库操作", color: "teal" },
+  { id: "chapter6", title: "第六章：Hive SQL案例（商品+成绩）", color: "pink" },
   { id: "faq", title: "常见问题排查", color: "red" },
 ];
 
@@ -24,6 +25,7 @@ const colorClasses: Record<string, { active: string; hover: string }> = {
   indigo: { active: "text-indigo-700 border-indigo-700", hover: "hover:text-indigo-600" },
   teal: { active: "text-teal-700 border-teal-700", hover: "hover:text-teal-600" },
   red: { active: "text-red-700 border-red-700", hover: "hover:text-red-600" },
+  pink: { active: "text-pink-700 border-pink-700", hover: "hover:text-pink-600" },
 };
 
 export default function SidebarNav() {
